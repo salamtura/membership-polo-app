@@ -20,5 +20,8 @@ class MemberAccess extends Model
         'mobile',
         'category',
         'status',
+        'enrolment_status',
+        'access_type',
+        'access_code',
     ];
 }
