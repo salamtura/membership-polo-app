@@ -5,6 +5,8 @@ namespace Database\Seeders;
 // use Illuminate\Database\Console\Seeds\WithoutModelEvents;
 use App\Models\User;
 use Illuminate\Database\Seeder;
+use Illuminate\Support\Facades\DB;
+use Pktharindu\NovaPermissions\Role;
 
 class DatabaseSeeder extends Seeder
 {
@@ -13,20 +15,20 @@ class DatabaseSeeder extends Seeder
      */
     public function run(): void
     {
-        // \App\Models\User::factory(10)->create();
+        $this->call([
+            RolesTableSeeder::class,
+        ]);
 
-        // \App\Models\User::factory()->create([
-        //     'name' => 'Test User',
-        //     'email' => 'test@example.com',
-        // ]);
-
-        User::factory()->create([
+        $user = User::factory()->create([
             'name' => 'Administrator',
             'email' => 'admin@admin.com',
             'is_admin' => true,
             'mobile' => '0801111111',
             'password' => bcrypt('password')
         ]);
+
+        $user->assignRole('administrator');
+
 
 
     }
