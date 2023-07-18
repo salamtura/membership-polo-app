@@ -101,7 +101,7 @@ class MemberAccess extends Resource
                     'ACTIVE' => 'Active',
                     'INACTIVE' => 'Inactive',
                 ])->displayUsingLabels()
-            ,
+            ->onlyOnForms(),
 
             Badge::make('Status')->map([
                 'INACTIVE' => 'danger',
@@ -112,7 +112,8 @@ class MemberAccess extends Resource
                 ->options([
                     'PENDING' => 'Pending',
                     'ENROLLED' => 'Enrolled',
-                ])->displayUsingLabels(),
+                ])->displayUsingLabels()
+            ->onlyOnForms(),
 
             Badge::make('Enrolment Status')->map([
                 'PENDING' => 'danger',
