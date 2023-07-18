@@ -33,7 +33,7 @@ class MemberAccess extends Resource
      * @var array
      */
     public static $search = [
-        'monile','name','access_code'
+        'mobile','name','access_code'
     ];
 
     /**

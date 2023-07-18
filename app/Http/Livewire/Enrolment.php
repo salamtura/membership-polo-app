@@ -51,9 +51,12 @@ class Enrolment extends Component
 
         $message = 'Guards Polo Club \n Your access code is '.$access->access_code;
         $recipients = $this->replaceLeadingZero($access->mobile);
-        $response = SMSUtil::sendSMS($message, $recipients);
 
-        if($response['status'] == "ok"){
+        if(env('APP_ENV') != 'local'){
+            $response = SMSUtil::sendSMS($message, $recipients);
+        }
+
+        if(env('APP_ENV') == 'local' || $response['status'] == "ok"){
             $this->showresult = false;
             $this->showcode = true;
         }else{
