@@ -1,7 +1,7 @@
 
 <div>
     <h3 class="text-center" style="font-size: 1.75rem !important;">Membership Access</h3>
-    <p class="text-center">Search by your name to begin enrollment</p>
+    <p class="text-center">Search and select by your name to begin enrollment</p>
 
     @if(!$showcode)
     <div class="search-box">
@@ -9,11 +9,11 @@
 
         <!-- Search result list -->
         @if($showresult)
-            <ul>
+            <ul class="list-style">
                 @if(!empty($records))
                     @foreach($records as $record)
 
-                        <li wire:click="fetchMemberDetail({{ $record->id }})">{{ $record->name}}</li>
+                        <li class="mt-2 border-b" wire:click="fetchMemberDetail({{ $record->id }})">{{ $record->name}}</li>
 
                     @endforeach
                 @endif
