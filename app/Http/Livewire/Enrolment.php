@@ -116,8 +116,6 @@ class Enrolment extends Component
 
     public function render()
     {
-        return view('livewire.enrolment',[
-            'membershipCategories' => $this->getMembershipCategories(),
-            ]);
+        return view('livewire.enrolment');
     }
 }
