@@ -4,6 +4,9 @@ namespace App\Http\Livewire;
 
 use App\Models\Membership;
 use App\Models\MemberAccess;
+use App\Models\MembershipCategory;
+use App\Models\Occupation;
+use App\Models\Profession;
 use Illuminate\Support\Facades\Auth;
 use Livewire\Component;
 use function PHPUnit\Framework\isEmpty;
@@ -18,6 +21,8 @@ class Wizard extends Component
         $emergency_contact_relationship;
     public $successMessage = '';
 
+    public $membershipCategories,$occupations,$professions;
+
     public function render()
     {
         if(Auth::check()){
@@ -31,6 +36,20 @@ class Wizard extends Component
             return view('livewire.wizard');
         }
         return abort(403);
+    }
+
+    public function mount(){
+        $this->membershipCategories = MembershipCategory::orderby('name','asc')
+            ->select('*')
+            ->get();
+
+        $this->professions = Profession::orderby('name','asc')
+            ->select('*')
+            ->get();
+
+        $this->occupations = Occupation::orderby('name','asc')
+            ->select('*')
+            ->get();
     }
 
     /**
@@ -121,13 +140,13 @@ class Wizard extends Component
             'mobile' => $this->mobile,
             'alt_mobile' => $this->alt_mobile,
             'email' => $this->email,
-            'occupation' => $this->occupation,
-            'profession' => $this->profession,
+            'occupation_id' => $this->occupation,
+            'profession_id' => $this->profession,
             'name_of_organization' => $this->name_of_organization,
             'type_of_organization' => $this->type_of_organization,
             'nationality' => $this->nationality,
             'date_of_birth' => $this->date_of_birth,
-            'category' => $this->category,
+            'membership_category_id' => $this->category,
             'area_of_interest' => $this->area_of_interest,
             'other_membership' => $this->other_membership,
             'other_club' => $this->other_club,

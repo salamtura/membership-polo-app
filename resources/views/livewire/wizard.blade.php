@@ -138,10 +138,9 @@
                         <label for="title">Occupation:</label>
                         <select  wire:model="occupation" class="form-control" id="taskOccupation">
                             <option></option>
-                            <option>Public Servant</option>
-                            <option>Civil Servant</option>
-                            <option>Military</option>
-                            <option>Self Employed</option>
+                            @foreach($occupations as $record)
+                                <option value="{{$record->id}}">{{$record->name}}</option>
+                            @endforeach
                         </select>
                         @error('occupation') <span class="invalid-feedback" style="display: block">{{ $message }}</span> @enderror
                     </div>
@@ -149,13 +148,9 @@
                         <label for="title">Profession/Discipline:</label>
                         <select  wire:model="profession" class="form-control" id="taskProfession">
                             <option></option>
-                            <option value="doctor">Doctor</option>
-                            <option value="engineer">Engineer</option>
-                            <option value="teacher">Teacher</option>
-                            <option value="lawyer">Lawyer</option>
-                            <option value="artist">Artist</option>
-                            <option value="scientist">Scientist</option>
-                            <option value="scientist">Scientist</option>
+                            @foreach($professions as $record)
+                                <option value="{{$record->id}}">{{$record->name}}</option>
+                            @endforeach
                         </select>
                         @error('profession') <span class="invalid-feedback" style="display: block">{{ $message }}</span> @enderror
                     </div>
@@ -216,12 +211,9 @@
                         <labhel for="title">Membership Category:</labhel>
                         <select  wire:model="category" class="form-control" id="taskCategory">
                             <option></option>
-                            <option>Full Membership</option>
-                            <option>Social Membership</option>
-                            <option>Family Membership</option>
-                            <option>Social Membership</option>
-                            <option>Junior Membership</option>
-                            <option>Foriegn Membership</option>
+                            @foreach($membershipCategories as $record)
+                                <option value="{{$record->id}}">{{$record->name}}</option>
+                            @endforeach
                         </select>
                         @error('category') <span class="invalid-feedback" style="display: block">{{ $message }}</span> @enderror
                     </div>

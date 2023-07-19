@@ -4,6 +4,9 @@ namespace App\Http\Livewire;
 
 use App\Http\Helpers\SMSUtil;
 use App\Models\MemberAccess;
+use App\Models\MembershipCategory;
+use App\Models\Occupation;
+use App\Models\Profession;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Crypt;
 use Livewire\Component;
@@ -113,6 +116,8 @@ class Enrolment extends Component
 
     public function render()
     {
-        return view('livewire.enrolment');
+        return view('livewire.enrolment',[
+            'membershipCategories' => $this->getMembershipCategories(),
+            ]);
     }
 }

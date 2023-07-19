@@ -33,7 +33,7 @@ class Membership extends Resource
      *
      * @var string
      */
-    public static $title = 'id';
+    public static $title = 'user.name';
 
     /**
      * The columns that should be searched.
@@ -41,8 +41,15 @@ class Membership extends Resource
      * @var array
      */
     public static $search = [
-        'id',
+        'user.name', 'mobile'
     ];
+
+    /**
+     * The visual style used for the table. Available options are 'tight' and 'default'.
+     *
+     * @var string
+     */
+    public static $tableStyle = 'tight';
 
     /**
      * Get the fields displayed by the resource.
@@ -55,110 +62,136 @@ class Membership extends Resource
         return [
             ID::make()->sortable(),
 //            UiAvatar::make('Avatar', 'surname'),
-            Image::make('Profile Photo')->disk('public'),
+            Image::make('Profile Photo')
+                ->rounded()
+                ->disableDownload()
+                ->disk('public'),
 
             (BelongsTo::make('User')),
 
-            (new Panel('Bio Data', [Text::make('Surname')
-                ->required()
-                ->sortable(),
-            Text::make('First Name')
-                ->required()
-                ->sortable(),
-            Text::make('Middle Name')
-                ->sortable(),
-            Email::make('Email')
-                ->required(),
-            Text::make('Mobile')
-                ->required(),
-            Text::make('Alternate Mobile','alt_mobile')
-                ->required(),
-            Text::make('Address')
-                ->required(),
-            Date::make('Date of Birth')
-            ,
-            Select::make('Gender')
-                ->options([
-                    'male' => 'Male',
-                    'female' => 'Female',
-                ])->displayUsingLabels(),
-            Select::make('Nationality')
-                ->options([
-                    'Nigerian' => 'Nigerian',
-                    'Other' => 'Other',
-                ])->displayUsingLabels(),
-            Select::make('Blood Group')
-                ->options([
-                    'A+' => 'A+',
-                    'A-' => 'A-',
-                    'B+' => 'B+',
-                    'B-' => 'B-',
-                    'AB+' => 'AB+',
-                    'AB-' => 'AB-',
-                    'O+' => 'O+',
-                    'O-' => 'O-',
-                ])->displayUsingLabels(),
-            Select::make('Genotype')
-                ->options([
-                    'AA' => 'AA',
-                    'AS' => 'AS',
-                    'AC' => 'AC',
-                    'SS' => 'SS',
-                    'SC' => 'SC',
-                    'CC' => 'CC',
-                    'OO' => 'OO',
-                ])->displayUsingLabels(),]
+            (new Panel('Bio Data', [
+                Text::make('Surname')
+                    ->hideFromIndex()
+                    ->required()
+                    ->sortable(),
+                Text::make('First Name')
+                    ->hideFromIndex()
+                    ->required()
+                    ->sortable(),
+                Text::make('Middle Name')
+                    ->hideFromIndex()
+                    ->sortable(),
+                Email::make('Email')
+                    ->hideFromIndex()
+                    ->required(),
+                Text::make('Mobile')
+                    ->required(),
+                Text::make('Alternate Mobile','alt_mobile')
+                    ->hideFromIndex()
+                    ->required(),
+                Text::make('Address')
+                    ->hideFromIndex()
+                    ->required(),
+                Date::make('Date of Birth')
+                    ->required()
+                    ->hideFromIndex()
+                ,
+                Select::make('Gender')
+                    ->options([
+                        'male' => 'Male',
+                        'female' => 'Female',
+                    ])->displayUsingLabels()
+                    ->hideFromIndex(),
+                Select::make('Nationality')
+                    ->options([
+                        'Nigerian' => 'Nigerian',
+                        'Other' => 'Other',
+                    ])->displayUsingLabels()
+                    ->hideFromIndex(),
+                Select::make('Blood Group')
+                    ->options([
+                        'A+' => 'A+',
+                        'A-' => 'A-',
+                        'B+' => 'B+',
+                        'B-' => 'B-',
+                        'AB+' => 'AB+',
+                        'AB-' => 'AB-',
+                        'O+' => 'O+',
+                        'O-' => 'O-',
+                    ])->displayUsingLabels()
+                    ->hideFromIndex(),
+                Select::make('Genotype')
+                    ->options([
+                        'AA' => 'AA',
+                        'AS' => 'AS',
+                        'AC' => 'AC',
+                        'SS' => 'SS',
+                        'SC' => 'SC',
+                        'CC' => 'CC',
+                        'OO' => 'OO',
+                    ])->displayUsingLabels()
+                    ->hideFromIndex(),
+                    ]
             )),
             (new Panel('Employment Details',[
-                    Select::make('Occupation')
-                        ->options([
-                            'male' => 'Male',
-                            'female' => 'Female',
-                        ])->displayUsingLabels(),
-                    Select::make('Profession')
-                        ->options([
-                            'male' => 'Male',
-                            'female' => 'Female',
-                        ])->displayUsingLabels(),
+                BelongsTo::make('Occupation')
+                        ->hideFromIndex(),
+                    BelongsTo::make('Profession')
+                        ->hideFromIndex(),
+
                     Text::make('Name of Organization')
+                        ->hideFromIndex()
                         ->required(),
                     Select::make('Type of Organization')
+                        ->hideFromIndex()
                         ->options([
                             'male' => 'Male',
                             'female' => 'Female',
                         ])->displayUsingLabels(),
                     Text::make('Office Address')
+                        ->hideFromIndex()
                         ->required(),
                 ]
             )),
             (new Panel('Area of Interest',[
                 Select::make('Area of Interest')
+                    ->hideFromIndex()
                     ->options([
                         'male' => 'Male',
                         'female' => 'Female',
                     ])->displayUsingLabels(),
-                Select::make('Membership Category','category')
-                    ->options([
-                        'male' => 'Male',
-                        'female' => 'Female',
-                    ])->displayUsingLabels(),
-                Boolean::make('other_membership'),
-                Text::make('Name of Club','other_club'),
-                Boolean::make('Have been involved in Polo','involved_in_polo'),
-                Boolean::make('Horse Owner','horse_owner'),
-                Number::make('Number of Horses'),
+
+
+                Boolean::make('other_membership')
+                    ->hideFromIndex(),
+                Text::make('Name of Club','other_club')
+                    ->hideFromIndex(),
+                Boolean::make('Have been involved in Polo','involved_in_polo')
+                    ->hideFromIndex(),
+                Boolean::make('Horse Owner','horse_owner')
+                    ->hideFromIndex(),
+                Number::make('Number of Horses')
+                    ->hideFromIndex(),
             ])),
 
             ( new Panel('Emergency Contact',[
-                Text::make('Emergency Contact Name'),
-                Text::make('Emergency Contact Mobile'),
-                Text::make('Emergency Contact Relationship'),
+                Text::make('Emergency Contact Name')
+                    ->hideFromIndex(),
+                Text::make('Emergency Contact Mobile')
+                    ->hideFromIndex(),
+                Text::make('Emergency Contact Relationship')
+                    ->hideFromIndex(),
             ])),
 
             ( new Panel('Official Details',[
-                BelongsTo::make('Proposed By','proposedBy','App\Nova\Membership'),
-                BelongsTo::make('Seconded By','secondedBy','App\Nova\Membership'),
-                BelongsTo::make('Approved By','approvedBy','App\Nova\User'),
+                BelongsTo::make('Proposed By','proposedBy','App\Nova\Membership')
+                    ->hideFromIndex(),
+                BelongsTo::make('Seconded By','secondedBy','App\Nova\Membership')
+                    ->hideFromIndex(),
+                BelongsTo::make('Approved By','approvedBy','App\Nova\User')
+                    ->hideFromIndex(),
+                BelongsTo::make('Membership Category')
+                    ->hideFromIndex(),
                 Select::make('Membership Status')
                     ->options([
                         'inactive' => 'Inactive',
@@ -185,9 +218,13 @@ class Membership extends Resource
                     'inactive' => 'danger',
                     'active' => 'success',
                 ]),
-                Number::make('Player Handicap')->sortable(),
-                Date::make('Year of Registration','membership_since')->sortable(),
-                Trix::make('Remarks'),
+                Number::make('Handicap','player_handicap')
+                    ->sortable(),
+                Date::make('Year of Registration','membership_since')
+                    ->hideFromIndex()
+                    ->sortable(),
+                Trix::make('Remarks')
+                    ->hideFromIndex(),
 
                 HasMany::make('Stables'),
             ]))

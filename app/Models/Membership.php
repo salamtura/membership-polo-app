@@ -82,4 +82,16 @@ class Membership extends Model
     public function stables(){
         return $this->hasMany(Stable::class);
     }
+
+    public function occupation(){
+        return $this->belongsTo(Occupation::class);
+    }
+
+    public function profession(){
+        return $this->belongsTo(Profession::class);
+    }
+
+    public function membershipCategory(){
+        return $this->belongsTo(MembershipCategory::class);
+    }
 }

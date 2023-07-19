@@ -24,8 +24,9 @@ class MemberMiddleware
         foreach ($guards as $guard) {
             if (Auth::guard($guard)->check()) {
                 if(Auth::user()->hasPermissionTo('view.member') ){
-                    $membership = Membership::all()->where('user_id','=',Auth::user()->id);
-                    if($membership->first() && $membership->get('membership_status') != 'pending'){
+                    $membership = Membership::query()->where('user_id','=',Auth::id())->first();
+
+                    if($membership != null && $membership->membership_status != 'pending'){
                         return $next($request);
                     }
                     return redirect('wizard');
