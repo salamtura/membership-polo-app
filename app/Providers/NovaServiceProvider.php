@@ -2,9 +2,32 @@
 
 namespace App\Providers;
 
+use App\Mail\SendInvoice;
+use App\Nova\Chukker;
+use App\Nova\ChukkerBooking;
+use App\Nova\PenaltyCharge;
+use App\Nova\Invoice;
+use App\Nova\MemberAccess;
+use App\Nova\Membership;
+use App\Nova\MembershipCategory;
+use App\Nova\Occupation;
+use App\Nova\Penalty;
+use App\Nova\Pitch;
+use App\Nova\Profession;
+use App\Nova\Stable;
+use App\Nova\StableCharge;
+use App\Nova\Subscription;
+use App\Nova\SubscriptionCategory;
+use App\Nova\User;
+use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Gate;
+use Illuminate\Support\Facades\Mail;
+use Laravel\Nova\Dashboards\Main;
+use Laravel\Nova\Menu\MenuItem;
+use Laravel\Nova\Menu\MenuSection;
 use Laravel\Nova\Nova;
 use Laravel\Nova\NovaApplicationServiceProvider;
+use Pktharindu\NovaPermissions\Nova\Role;
 use SimonHamp\LaravelNovaCsvImport\LaravelNovaCsvImport;
 
 class NovaServiceProvider extends NovaApplicationServiceProvider
@@ -19,6 +42,56 @@ class NovaServiceProvider extends NovaApplicationServiceProvider
         parent::boot();
 
         Nova::withBreadcrumbs();
+
+        Nova::mainMenu(function (Request $request) {
+            return [
+                MenuSection::dashboard(Main::class)->icon('chart-bar'),
+
+                MenuSection::make('Activities', [
+                    MenuItem::resource(Pitch::class)
+                        ->name('Pitch Status'),
+                    MenuItem::resource(Chukker::class)
+                        ->name('Chukkers'),
+                ])->icon('play')->collapsable(),
+
+                MenuSection::make('Accounts', [
+                    MenuItem::resource(User::class),
+                    MenuItem::resource(Role::class),
+                    MenuItem::resource(MemberAccess::class)
+                        ->name('Member Access'),
+                ])->icon('user')->collapsable(),
+
+                MenuSection::make('Membership', [
+                    MenuItem::resource(Membership::class),
+                    MenuItem::resource(Stable::class),
+                    MenuItem::resource(Subscription::class),
+                    MenuItem::resource(Penalty::class),
+                ])->icon('user-group')->collapsable(),
+
+                MenuSection::make(' Club Charges', [
+                    MenuItem::resource(Invoice::class)
+                        ->name('Invoices'),
+                    MenuItem::resource(MembershipCategory::class)
+                        ->name('Membership Charges'),
+                    MenuItem::resource(SubscriptionCategory::class)
+                        ->name('Subscription Charges'),
+                    MenuItem::resource(StableCharge::class)
+                        ->name('Stable Charges'),
+                    MenuItem::resource(PenaltyCharge::class)
+                        ->name('Penalty Charges'),
+                ])->icon('cash')->collapsable(),
+
+                MenuSection::make('Reports', [
+
+                ])->icon('document-text')->collapsable(),
+
+                MenuSection::make('Administration', [
+                    MenuItem::resource(Occupation::class),
+                    MenuItem::resource(Profession::class),
+                ])->icon('puzzle')->collapsable(),
+            ];
+        });
+
     }
 
     /**

@@ -2,29 +2,32 @@
 
 namespace App\Nova;
 
-use Illuminate\Bus\Queueable;
 use Illuminate\Http\Request;
+use Laravel\Nova\Fields\BelongsTo;
 use Laravel\Nova\Fields\Currency;
+use Laravel\Nova\Fields\Date;
+use Laravel\Nova\Fields\HasMany;
 use Laravel\Nova\Fields\ID;
+use Laravel\Nova\Fields\Select;
 use Laravel\Nova\Fields\Text;
+use Laravel\Nova\Fields\Trix;
 use Laravel\Nova\Http\Requests\NovaRequest;
 
-class SubscriptionCategory extends Resource
+class Penalty extends Resource
 {
-    use Queueable;
     /**
      * The model the resource corresponds to.
      *
-     * @var class-string<\App\Models\SubscriptionCategory>
+     * @var class-string<\App\Models\Penalty>
      */
-    public static $model = \App\Models\SubscriptionCategory::class;
+    public static $model = \App\Models\Penalty::class;
 
     /**
      * The single value that should be used to represent the resource when being displayed.
      *
      * @var string
      */
-    public static $title = 'name';
+    public static $title = 'penaltycharge.name';
 
     /**
      * The columns that should be searched.
@@ -32,7 +35,7 @@ class SubscriptionCategory extends Resource
      * @var array
      */
     public static $search = [
-        'name',
+        'id',
     ];
 
     /**
@@ -45,13 +48,38 @@ class SubscriptionCategory extends Resource
     {
         return [
             ID::make()->sortable(),
-            Text::make('name')
+            BelongsTo::make('Membership')
+                ->required(),
+            BelongsTo::make('Penalty Charge')
+                ->required(),
+            Date::make('Penalty Date')
+                ->sortable()
+                ->required(),
+            Trix::make('Remarks')
                 ->required()
                 ->sortable(),
-            Currency::make('Subscription Fee','amount')
+            Currency::make('Amount')
                 ->currency('NGN')
+                ->hideWhenCreating()
+                ->hideWhenUpdating()
+                ->required()
+                ->sortable(),
+            Select::make('Status')
+                ->options([
+                    'pending' => 'Pending',
+                    'served' => 'Served',
+                ])
+                ->hideWhenCreating()
                 ->required(),
+            BelongsTo::make('User')
+                ->hideWhenCreating()
+                ->hideWhenUpdating(),
+            Date::make('Updated At')
+                ->onlyOnDetail(),
+            Date::make('Created At')
+                ->onlyOnDetail(),
 
+            HasMany::make('Invoice'),
         ];
     }
 

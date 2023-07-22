@@ -3,6 +3,7 @@
 namespace App\Observers;
 
 use App\Models\Stable;
+use Illuminate\Support\Facades\Auth;
 
 class StableObserver
 {

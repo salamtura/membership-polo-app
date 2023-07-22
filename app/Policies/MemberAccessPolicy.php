@@ -8,7 +8,7 @@ class MemberAccessPolicy
 {
     public function viewAny(User $user)
     {
-        return $user->hasPermissionTo('view.member accesses');
+        return $user->hasPermissionTo('see.member accesses');
     }
 
     public function view(User $user)

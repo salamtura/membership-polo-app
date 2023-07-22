@@ -20,10 +20,14 @@ Route::get('/', function () {
     return view('welcome');
 });
 
-Route::get('/dashboard', function () {
-    return view('dashboard');
-//    return Auth::user()->hasPermissionTo('view.member') ? view('dashboard') : abort(403);
-})->middleware(['auth', 'verified','member'])->name('dashboard');
+Route::get('/dashboard', [\App\Http\Controllers\DashboardController::class, 'create'])
+    ->middleware(['auth', 'verified','member'])->name('dashboard');
+Route::get('/invoices', [\App\Http\Controllers\InvoiceController::class, 'create'])
+    ->middleware(['auth', 'verified','member'])->name('invoices');
+Route::get('/docs', [\App\Http\Controllers\DashboardController::class, 'create'])
+    ->middleware(['auth', 'verified','member'])->name('docs');
+Route::get('/fees', [\App\Http\Controllers\FeeController::class, 'create'])
+    ->middleware(['auth', 'verified','member'])->name('fees');
 
 Route::middleware(['auth','member'])->group(function () {
     Route::get('/profile', [ProfileController::class, 'edit'])->name('profile.edit');

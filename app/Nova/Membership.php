@@ -227,6 +227,9 @@ class Membership extends Resource
                     ->hideFromIndex(),
 
                 HasMany::make('Stables'),
+                HasMany::make('Subscriptions'),
+                HasMany::make('Penalties'),
+                HasMany::make('Invoices'),
             ]))
 
 

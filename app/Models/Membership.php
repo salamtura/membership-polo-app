@@ -61,6 +61,7 @@ class Membership extends Model
      */
     protected $casts = [
         'date_of_birth' => 'date',
+        'membership_since' => 'date',
     ];
 
     public function proposedBy() {
@@ -81,6 +82,18 @@ class Membership extends Model
 
     public function stables(){
         return $this->hasMany(Stable::class);
+    }
+
+    public function invoices(){
+        return $this->hasMany(Invoice::class);
+    }
+
+    public function subscriptions(){
+        return $this->hasMany(Subscription::class);
+    }
+
+    public function penalties(){
+        return $this->hasMany(Penalty::class);
     }
 
     public function occupation(){

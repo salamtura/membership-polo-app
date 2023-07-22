@@ -2,29 +2,29 @@
 
 namespace App\Nova;
 
-use Illuminate\Bus\Queueable;
 use Illuminate\Http\Request;
+use Laravel\Nova\Fields\BelongsTo;
 use Laravel\Nova\Fields\Currency;
+use Laravel\Nova\Fields\Date;
 use Laravel\Nova\Fields\ID;
 use Laravel\Nova\Fields\Text;
 use Laravel\Nova\Http\Requests\NovaRequest;
 
-class SubscriptionCategory extends Resource
+class StableCharge extends Resource
 {
-    use Queueable;
     /**
      * The model the resource corresponds to.
      *
-     * @var class-string<\App\Models\SubscriptionCategory>
+     * @var class-string<\App\Models\StableCharge>
      */
-    public static $model = \App\Models\SubscriptionCategory::class;
+    public static $model = \App\Models\StableCharge::class;
 
     /**
      * The single value that should be used to represent the resource when being displayed.
      *
      * @var string
      */
-    public static $title = 'name';
+    public static $title = 'id';
 
     /**
      * The columns that should be searched.
@@ -32,7 +32,7 @@ class SubscriptionCategory extends Resource
      * @var array
      */
     public static $search = [
-        'name',
+        'remarks',
     ];
 
     /**
@@ -45,13 +45,25 @@ class SubscriptionCategory extends Resource
     {
         return [
             ID::make()->sortable(),
-            Text::make('name')
-                ->required()
-                ->sortable(),
-            Currency::make('Subscription Fee','amount')
+            Text::make('Remarks')->required(),
+            Currency::make('Box Fee')
                 ->currency('NGN')
                 ->required(),
-
+            Currency::make('Lounge Fee')
+                ->currency('NGN')
+                ->required(),
+            Currency::make('Store Fee')
+                ->currency('NGN')
+                ->required(),
+            Currency::make('Room Fee')
+                ->currency('NGN')
+                ->required(),
+            Date::make('Update At')
+                ->hideWhenCreating()
+                ->hideWhenUpdating(),
+            BelongsTo::make('User')
+                ->hideWhenCreating()
+                ->hideWhenUpdating(),
         ];
     }
 

@@ -3,7 +3,13 @@
 namespace App\Nova;
 
 use Illuminate\Http\Request;
+use Laravel\Nova\Fields\BelongsTo;
+use Laravel\Nova\Fields\Currency;
+use Laravel\Nova\Fields\Date;
+use Laravel\Nova\Fields\HasMany;
 use Laravel\Nova\Fields\ID;
+use Laravel\Nova\Fields\Select;
+use Laravel\Nova\Fields\Text;
 use Laravel\Nova\Http\Requests\NovaRequest;
 
 class Subscription extends Resource
@@ -20,7 +26,7 @@ class Subscription extends Resource
      *
      * @var string
      */
-    public static $title = 'id';
+    public static $title = 'subscriptioncategory.name';
 
     /**
      * The columns that should be searched.
@@ -41,6 +47,38 @@ class Subscription extends Resource
     {
         return [
             ID::make()->sortable(),
+            BelongsTo::make('Membership')
+                ->sortable()
+                ->required(),
+            BelongsTo::make('Subscription Category')
+                ->sortable()
+                ->required(),
+            Select::make('Year')
+                ->options([
+                    '2023' => '2023',
+                    '2024' => '2024',
+                    '2025' => '2025'
+                ])
+                ->required()
+                ->filterable(),
+            Currency::make('Amount')
+                ->hideWhenCreating()
+                ->hideWhenUpdating()
+                ->currency('NGN'),
+            Select::make('Payment Status')
+                ->options([
+                    'paid' => 'Paid',
+                    'unpaid' => 'Unpaid',
+                ])
+                ->hideWhenCreating()
+                ->filterable(),
+            Date::make('Payment Date')
+                ->hideWhenCreating(),
+            Text::make('Remarks')
+                ->hideFromIndex(),
+
+            HasMany::make('Invoice'),
+
         ];
     }
 

@@ -2,29 +2,28 @@
 
 namespace App\Nova;
 
-use Illuminate\Bus\Queueable;
 use Illuminate\Http\Request;
-use Laravel\Nova\Fields\Currency;
+use Laravel\Nova\Fields\BelongsTo;
+use Laravel\Nova\Fields\DateTime;
 use Laravel\Nova\Fields\ID;
-use Laravel\Nova\Fields\Text;
+use Laravel\Nova\Fields\Select;
 use Laravel\Nova\Http\Requests\NovaRequest;
 
-class SubscriptionCategory extends Resource
+class Pitch extends Resource
 {
-    use Queueable;
     /**
      * The model the resource corresponds to.
      *
-     * @var class-string<\App\Models\SubscriptionCategory>
+     * @var class-string<\App\Models\Pitch>
      */
-    public static $model = \App\Models\SubscriptionCategory::class;
+    public static $model = \App\Models\Pitch::class;
 
     /**
      * The single value that should be used to represent the resource when being displayed.
      *
      * @var string
      */
-    public static $title = 'name';
+    public static $title = 'description';
 
     /**
      * The columns that should be searched.
@@ -32,7 +31,7 @@ class SubscriptionCategory extends Resource
      * @var array
      */
     public static $search = [
-        'name',
+        'description',
     ];
 
     /**
@@ -45,13 +44,26 @@ class SubscriptionCategory extends Resource
     {
         return [
             ID::make()->sortable(),
-            Text::make('name')
-                ->required()
-                ->sortable(),
-            Currency::make('Subscription Fee','amount')
-                ->currency('NGN')
+            Select::make('Description')
+                ->options([
+                    'For stick and ball only' => 'For stick and ball only',
+                    'For Chukkers' => 'For Chukkers',
+                    'For Maintenance' => 'For Maintenance',
+                    'For Tournament' => 'For Tournament',
+                    'End of Season' => 'End of Season',
+                ]),
+            DateTime::make('From','from_date')
                 ->required(),
-
+            DateTime::make('To','to_date')
+                ->required(),
+            Select::make('Status')
+                ->options([
+                    'open' => 'Open',
+                    'closed' => 'Closed',
+                ]),
+            BelongsTo::make('User')
+                ->required()
+                ->onlyOnDetail(),
         ];
     }
 

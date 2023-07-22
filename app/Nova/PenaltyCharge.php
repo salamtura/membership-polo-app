@@ -2,22 +2,22 @@
 
 namespace App\Nova;
 
-use Illuminate\Bus\Queueable;
 use Illuminate\Http\Request;
+use Laravel\Nova\Fields\BelongsTo;
 use Laravel\Nova\Fields\Currency;
+use Laravel\Nova\Fields\Date;
 use Laravel\Nova\Fields\ID;
 use Laravel\Nova\Fields\Text;
 use Laravel\Nova\Http\Requests\NovaRequest;
 
-class SubscriptionCategory extends Resource
+class PenaltyCharge extends Resource
 {
-    use Queueable;
     /**
      * The model the resource corresponds to.
      *
-     * @var class-string<\App\Models\SubscriptionCategory>
+     * @var class-string<\App\Models\PenaltyCharge>
      */
-    public static $model = \App\Models\SubscriptionCategory::class;
+    public static $model = \App\Models\PenaltyCharge::class;
 
     /**
      * The single value that should be used to represent the resource when being displayed.
@@ -45,13 +45,20 @@ class SubscriptionCategory extends Resource
     {
         return [
             ID::make()->sortable(),
-            Text::make('name')
+            Text::make('Name')
                 ->required()
                 ->sortable(),
-            Currency::make('Subscription Fee','amount')
+            Currency::make('Amount')
                 ->currency('NGN')
-                ->required(),
-
+                ->required()
+                ->sortable(),
+            BelongsTo::make('User')
+                ->hideWhenCreating()
+                ->hideWhenUpdating(),
+            Date::make('Updated At')
+                ->onlyOnDetail(),
+            Date::make('Created At')
+                ->onlyOnDetail(),
         ];
     }
 

@@ -3,15 +3,17 @@
 namespace App\Models;
 
 // use Illuminate\Contracts\Auth\MustVerifyEmail;
+use Illuminate\Contracts\Auth\MustVerifyEmail;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
+use Illuminate\Database\Eloquent\Relations\HasMany;
 use Illuminate\Database\Eloquent\Relations\HasOne;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
 use Laravel\Sanctum\HasApiTokens;
 use Pktharindu\NovaPermissions\Traits\HasRoles;
 
-class User extends Authenticatable
+class User extends Authenticatable //implements MustVerifyEmail
 {
     use HasApiTokens, HasFactory, Notifiable, HasRoles;
 
@@ -51,8 +53,22 @@ class User extends Authenticatable
     /**
      * Get the phone associated with the user.
      */
-    public function member(): BelongsTo
+    public function membership(): HasOne
     {
-        return $this->belongsTo(Membership::class);
+        return $this->hasOne(Membership::class);
+    }
+
+    public function subscription(): HasMany
+    {
+        return $this->hasMany(Subscription::class);
+    }
+    public function stable(): HasOne
+    {
+        return $this->hasOne(Stable::class);
+    }
+
+    public function invoice(): HasMany
+    {
+        return $this->hasMany(Invoice::class);
     }
 }

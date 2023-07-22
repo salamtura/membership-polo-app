@@ -8,7 +8,7 @@ class MembershipPolicy
 {
     public function viewAny(User $user)
     {
-        return $user->hasPermissionTo('view.memberships');
+        return $user->hasPermissionTo('see.memberships');
     }
 
     public function view(User $user)

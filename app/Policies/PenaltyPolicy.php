@@ -2,26 +2,26 @@
 
 namespace App\Policies;
 
+use App\Models\Penalty;
 use App\Models\User;
 use Illuminate\Auth\Access\Response;
-use Pktharindu\NovaPermissions\Role;
 
-class RolePolicy
+class PenaltyPolicy
 {
     /**
      * Determine whether the user can view any models.
      */
     public function viewAny(User $user): bool
     {
-        return $user->hasPermissionTo('see.roles');
+        return $user->hasPermissionTo('see.penalties');
     }
 
     /**
      * Determine whether the user can view the model.
      */
-    public function view(User $user, Role $role): bool
+    public function view(User $user, Penalty $penalty): bool
     {
-        return $user->hasPermissionTo('view.roles');
+        return $user->hasPermissionTo('view.penalties');
     }
 
     /**
@@ -29,38 +29,38 @@ class RolePolicy
      */
     public function create(User $user): bool
     {
-        return $user->hasPermissionTo('create.roles');
+        return $user->hasPermissionTo('create.penalties');
     }
 
     /**
      * Determine whether the user can update the model.
      */
-    public function update(User $user, Role $role): bool
+    public function update(User $user, Penalty $penalty): bool
     {
-        return $user->hasPermissionTo('edit.roles');
+        return $user->hasPermissionTo('edit.penalties');
     }
 
     /**
      * Determine whether the user can delete the model.
      */
-    public function delete(User $user, Role $role): bool
+    public function delete(User $user, Penalty $penalty): bool
     {
-        return $user->hasPermissionTo('delete.roles');
+        return $user->hasPermissionTo('delete.penalties');
     }
 
     /**
      * Determine whether the user can restore the model.
      */
-    public function restore(User $user, Role $role): bool
+    public function restore(User $user, Penalty $penalty): bool
     {
-        return $user->hasPermissionTo('delete.roles');
+        return $user->hasPermissionTo('delete.penalties');
     }
 
     /**
      * Determine whether the user can permanently delete the model.
      */
-    public function forceDelete(User $user, Role $role): bool
+    public function forceDelete(User $user, Penalty $penalty): bool
     {
-        return $user->hasPermissionTo('delete.roles');
+        return $user->hasPermissionTo('delete.penalties');
     }
 }

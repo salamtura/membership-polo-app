@@ -2,29 +2,25 @@
 
 namespace App\Nova;
 
-use Illuminate\Bus\Queueable;
 use Illuminate\Http\Request;
-use Laravel\Nova\Fields\Currency;
 use Laravel\Nova\Fields\ID;
-use Laravel\Nova\Fields\Text;
 use Laravel\Nova\Http\Requests\NovaRequest;
 
-class SubscriptionCategory extends Resource
+class ChukkerBooking extends Resource
 {
-    use Queueable;
     /**
      * The model the resource corresponds to.
      *
-     * @var class-string<\App\Models\SubscriptionCategory>
+     * @var class-string<\App\Models\ChukkerBooking>
      */
-    public static $model = \App\Models\SubscriptionCategory::class;
+    public static $model = \App\Models\ChukkerBooking::class;
 
     /**
      * The single value that should be used to represent the resource when being displayed.
      *
      * @var string
      */
-    public static $title = 'name';
+    public static $title = 'id';
 
     /**
      * The columns that should be searched.
@@ -32,7 +28,7 @@ class SubscriptionCategory extends Resource
      * @var array
      */
     public static $search = [
-        'name',
+        'id',
     ];
 
     /**
@@ -45,13 +41,6 @@ class SubscriptionCategory extends Resource
     {
         return [
             ID::make()->sortable(),
-            Text::make('name')
-                ->required()
-                ->sortable(),
-            Currency::make('Subscription Fee','amount')
-                ->currency('NGN')
-                ->required(),
-
         ];
     }
 

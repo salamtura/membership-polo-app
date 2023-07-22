@@ -62,7 +62,18 @@ function getPermissions(){
         \App\Models\Membership::class,
         \App\Models\Stable::class,
         \App\Models\MemberAccess::class,
-
+        \App\Models\MembershipCategory::class,
+        \App\Models\Subscription::class,
+        \App\Models\SubscriptionCategory::class,
+        \App\Models\Occupation::class,
+        \App\Models\Profession::class,
+        \App\Models\Invoice::class,
+        \App\Models\StableCharge::class,
+        \App\Models\Penalty::class,
+        \App\Models\PenaltyCharge::class,
+        \App\Models\Pitch::class,
+        \App\Models\ChukkerBooking::class,
+        \App\Models\Chukker::class,
     ]);
 
     $perm = [];
@@ -101,6 +112,16 @@ function getPermissions(){
         'duty.secretary' => [
             'display_name' => 'Secretary duties',
             'description'  => 'Can perform Secretary Duties',
+            'group'        => 'Management',
+        ],
+        'duty.grounds' => [
+            'display_name' => 'Grounds duties',
+            'description'  => 'Can perform Grounds Duties',
+            'group'        => 'Management',
+        ],
+        'duty.house' => [
+            'display_name' => 'House duties',
+            'description'  => 'Can perform House Duties',
             'group'        => 'Management',
         ],
 //        'view.logs' => [

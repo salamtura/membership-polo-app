@@ -4,30 +4,30 @@ namespace App\Policies;
 
 use App\Models\User;
 
-class StablePolicy
+class UserPolicy
 {
     public function viewAny(User $user)
     {
-        return $user->hasPermissionTo('see.stables');
+        return $user->hasPermissionTo('see.users');
     }
 
     public function view(User $user)
     {
-        return $user->hasPermissionTo('view.stables');
+        return $user->hasPermissionTo('view.users');
     }
 
     public function create(User $user)
     {
-        return $user->hasPermissionTo('create.stables');
+        return $user->hasPermissionTo('create.users');
     }
 
     public function update(User $user)
     {
-        return $user->hasPermissionTo('edit.stables');
+        return $user->hasPermissionTo('edit.users');
     }
 
     public function delete(User $user)
     {
-        return $user->hasPermissionTo('delete.stables');
+        return $user->hasPermissionTo('delete.users');
     }
 }
