@@ -3,7 +3,11 @@
 namespace App\Nova;
 
 use Illuminate\Http\Request;
+use Laravel\Nova\Fields\Badge;
+use Laravel\Nova\Fields\BelongsTo;
 use Laravel\Nova\Fields\ID;
+use Laravel\Nova\Fields\Number;
+use Laravel\Nova\Fields\Select;
 use Laravel\Nova\Http\Requests\NovaRequest;
 
 class ChukkerBooking extends Resource
@@ -20,7 +24,7 @@ class ChukkerBooking extends Resource
      *
      * @var string
      */
-    public static $title = 'id';
+    public static $title = 'membership.surname';
 
     /**
      * The columns that should be searched.
@@ -28,7 +32,7 @@ class ChukkerBooking extends Resource
      * @var array
      */
     public static $search = [
-        'id',
+        'membership.surname','membership.first_name'
     ];
 
     /**
@@ -41,6 +45,29 @@ class ChukkerBooking extends Resource
     {
         return [
             ID::make()->sortable(),
+            BelongsTo::make('Membership'),
+            Number::make('Chukker Number')
+                ->sortable()
+                ->required(),
+            Number::make('Mounts')
+                ->sortable()
+                ->required(),
+            Select::make('Preference')->options([
+                'morning' => 'Morning',
+                'evening' => 'Evening',
+            ])->sortable(),
+            Select::make('Status')->options([
+                'booked' => 'Booked',
+                'confirmed' => 'Confirmed',
+                'rejected' => 'Rejected',
+                'cancelled' => 'Cancelled',
+            ])->onlyOnForms(),
+            Badge::make('Status')->map([
+                'booked' => 'warning',
+                'confirmed' => 'success',
+                'rejected' => 'danger',
+                'cancelled' => 'info',
+            ])->sortable(),
         ];
     }
 

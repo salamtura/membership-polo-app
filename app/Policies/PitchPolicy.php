@@ -29,6 +29,10 @@ class PitchPolicy
      */
     public function create(User $user): bool
     {
+        $pitch = Pitch::all()->count();
+        if($pitch > 0 ){
+            return false;
+        }
         return $user->hasPermissionTo('create.pitches');
     }
 

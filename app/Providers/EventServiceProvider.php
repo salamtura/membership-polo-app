@@ -2,21 +2,29 @@
 
 namespace App\Providers;
 
+use App\Models\Chukker;
+use App\Models\ChukkerBooking;
+use App\Models\Document;
 use App\Models\Invoice;
 use App\Models\MemberAccess;
 use App\Models\Membership;
 use App\Models\Penalty;
 use App\Models\PenaltyCharge;
 use App\Models\Pitch;
+use App\Models\Post;
 use App\Models\Stable;
 use App\Models\StableCharge;
 use App\Models\Subscription;
+use App\Observers\ChukkerBookingObserver;
+use App\Observers\ChukkerObserver;
+use App\Observers\DocumentObserver;
 use App\Observers\InvoiceObserver;
 use App\Observers\MemberAccessObserver;
 use App\Observers\MembershipObserver;
 use App\Observers\PenaltyChargeObserver;
 use App\Observers\PenaltyObserver;
 use App\Observers\PitchObserver;
+use App\Observers\PostObserver;
 use App\Observers\StableChargeObserver;
 use App\Observers\StableObserver;
 use App\Observers\SubscriptionObserver;
@@ -43,7 +51,10 @@ class EventServiceProvider extends ServiceProvider
         Penalty::class => [PenaltyObserver::class],
         PenaltyCharge::class => [PenaltyChargeObserver::class],
         Pitch::class => [PitchObserver::class],
-
+        ChukkerBooking::class => [ChukkerBookingObserver::class],
+        Chukker::class => [ChukkerObserver::class],
+        Post::class => [PostObserver::class],
+        Document::class => [DocumentObserver::class],
     ];
 
     /**

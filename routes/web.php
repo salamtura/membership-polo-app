@@ -22,6 +22,10 @@ Route::get('/', function () {
 
 Route::get('/dashboard', [\App\Http\Controllers\DashboardController::class, 'create'])
     ->middleware(['auth', 'verified','member'])->name('dashboard');
+
+Route::post('/dashboard', [\App\Http\Controllers\DashboardController::class, 'bookChukker'])
+    ->middleware(['auth', 'verified','member'])->name('dashboard');
+
 Route::get('/invoices', [\App\Http\Controllers\InvoiceController::class, 'create'])
     ->middleware(['auth', 'verified','member'])->name('invoices');
 Route::get('/docs', [\App\Http\Controllers\DashboardController::class, 'create'])
@@ -38,12 +42,10 @@ Route::middleware(['auth','member'])->group(function () {
 Route::get('getaccess', [GetAccessController::class, 'create'])
     ->name('getaccess');
 
-//Route::get('enrolment', [\App\Http\Controllers\EnrolmentController::class, 'index']);
-
-//Route::get('autocomplete', [GetAccessController::class, 'autocomplete'])->name('autocomplete');
-
 Route::get('wizard', [ 'middleware' => 'wizard', function () {
     return view('default');
 }]);
+
+
 
 require __DIR__.'/auth.php';

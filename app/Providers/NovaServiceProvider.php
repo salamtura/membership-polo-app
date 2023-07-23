@@ -3,8 +3,11 @@
 namespace App\Providers;
 
 use App\Mail\SendInvoice;
+use App\Nova\PostCategory;
 use App\Nova\Chukker;
 use App\Nova\ChukkerBooking;
+use App\Nova\Document;
+use App\Nova\DocumentCategory;
 use App\Nova\PenaltyCharge;
 use App\Nova\Invoice;
 use App\Nova\MemberAccess;
@@ -13,6 +16,7 @@ use App\Nova\MembershipCategory;
 use App\Nova\Occupation;
 use App\Nova\Penalty;
 use App\Nova\Pitch;
+use App\Nova\Post;
 use App\Nova\Profession;
 use App\Nova\Stable;
 use App\Nova\StableCharge;
@@ -52,6 +56,10 @@ class NovaServiceProvider extends NovaApplicationServiceProvider
                         ->name('Pitch Status'),
                     MenuItem::resource(Chukker::class)
                         ->name('Chukkers'),
+                    MenuItem::resource(Post::class)
+                        ->name('Posts'),
+                    MenuItem::resource(Document::class)
+                        ->name('Documents'),
                 ])->icon('play')->collapsable(),
 
                 MenuSection::make('Accounts', [
@@ -88,6 +96,8 @@ class NovaServiceProvider extends NovaApplicationServiceProvider
                 MenuSection::make('Administration', [
                     MenuItem::resource(Occupation::class),
                     MenuItem::resource(Profession::class),
+                    MenuItem::resource(PostCategory::class),
+                    MenuItem::resource(DocumentCategory::class),
                 ])->icon('puzzle')->collapsable(),
             ];
         });

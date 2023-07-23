@@ -74,6 +74,10 @@ function getPermissions(){
         \App\Models\Pitch::class,
         \App\Models\ChukkerBooking::class,
         \App\Models\Chukker::class,
+        \App\Models\Post::class,
+        \App\Models\PostCategory::class,
+        \App\Models\Document::class,
+        \App\Models\DocumentCategory::class,
     ]);
 
     $perm = [];

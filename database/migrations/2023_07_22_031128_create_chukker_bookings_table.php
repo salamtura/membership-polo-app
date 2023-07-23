@@ -21,7 +21,7 @@ return new class extends Migration
             $table->unsignedBigInteger('membership_id');
             $table->unsignedBigInteger('chukker_id');
             $table->string('remarks')->nullable();
-            $table->unsignedBigInteger('user_id');
+            $table->unsignedBigInteger('user_id')->nullable();
 
             $table->foreign('user_id')->references('id')->on('users');
             $table->foreign('membership_id')->references('id')->on('memberships');

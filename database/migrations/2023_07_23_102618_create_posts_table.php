@@ -11,14 +11,15 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::create('chukkers', function (Blueprint $table) {
+        Schema::create('posts', function (Blueprint $table) {
             $table->id();
             $table->timestamps();
-            $table->string('chukker_no');
-            $table->date('chukker_date');
-            $table->dateTime('closing_time');
-            $table->string('status');
-            $table->string('remarks')->nullable();
+            $table->softDeletes();
+            $table->string('title');
+            $table->string('category')->nullable();
+            $table->text('post');
+            $table->string('image')->nullable();
+            $table->string('document')->nullable();
             $table->unsignedBigInteger('user_id');
 
             $table->foreign('user_id')->references('id')->on('users');
@@ -31,6 +32,6 @@ return new class extends Migration
      */
     public function down(): void
     {
-        Schema::dropIfExists('chukkers');
+        Schema::dropIfExists('posts');
     }
 };

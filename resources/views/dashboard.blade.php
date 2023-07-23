@@ -85,6 +85,9 @@
                 <!-- Right Side -->
                 <div class="w-full md:w-9/12 mx-2 h-64">
                     <div class=" grid md:grid-cols-2 sm:grid-cols-1">
+                        @if( \Carbon\Carbon::now()->greaterThan($pitch->to_date) )
+                            @php $pitch->status = 'closed'; @endphp
+                        @endif
                         <div class="w-full max-w-md p-4 {{$pitch->status =='open' ? 'bg-green-500' : 'bg-red-500'}} border border-gray-200 rounded-lg shadow sm:p-8">
                             <h5 class="text-xl font-medium text-black">Pitch Status</h5>
                             <div class="flex items-baseline {{$pitch->status =='open' ? 'text-green-900' : 'text-red-900'}}">
@@ -108,22 +111,48 @@
                                 @endif
                             </ul>
                         </div>
-                        <div class="w-full max-w-md p-4 bg-red-500 border border-gray-200 rounded-lg shadow sm:p-8 ">
+
+                        @if( \Carbon\Carbon::now()->greaterThan($chukker->closing_time) || $pitch->status =='closed' )
+                            @php $chukker->status = 'closed'; @endphp
+                        @endif
+                        <div class="w-full max-w-md p-4 {{$chukker->status == 'open' ? 'bg-green-500' : 'bg-red-500'}} border border-gray-200 rounded-lg shadow sm:p-8 ">
                             <h5 class="text-xl font-medium text-black">Chukker Booking</h5>
-                            <div class="flex items-baseline text-red-900">
-                                <span class="text-5xl font-extrabold tracking-tight">CLOSED</span>
+                            <div class="flex items-baseline {{$chukker->status == 'open' ? 'text-green-900' : 'text-red-900'}}">
+                                <span class="text-5xl font-extrabold tracking-tight">{{\Illuminate\Support\Str::upper($chukker->status)}}</span>
 {{--                                <span class="ml-1 text-xl font-normal text-white">15:34:23</span>--}}
                             </div>
                             <ul role="list" class="space-y-5 my-7">
                                 <li class="flex space-x-3 items-center">
-                                    <svg class="flex-shrink-0 w-4 h-4 text-blue-600 dark:text-blue-500" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="currentColor" viewBox="0 0 20 20">
+                                    <svg class="flex-shrink-0 w-4 h-4 text-black" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="currentColor" viewBox="0 0 20 20">
                                         <path d="M10 .5a9.5 9.5 0 1 0 9.5 9.5A9.51 9.51 0 0 0 10 .5Zm3.707 8.207-4 4a1 1 0 0 1-1.414 0l-2-2a1 1 0 0 1 1.414-1.414L9 10.586l3.293-3.293a1 1 0 0 1 1.414 1.414Z"/>
                                     </svg>
-                                    <span class="text-base font-normal leading-tight text-white dark:text-gray-400">text text</span>
+                                    <span class="text-base font-normal leading-tight text-white dark:text-gray-400">{{\Illuminate\Support\Str::upper($chukker->chukker_no)}}</span>
+                                </li>
+                                <li class="flex space-x-3 items-center">
+                                    <svg class="flex-shrink-0 w-4 h-4 text-black" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="currentColor" viewBox="0 0 20 20">
+                                        <path d="M10 .5a9.5 9.5 0 1 0 9.5 9.5A9.51 9.51 0 0 0 10 .5Zm3.707 8.207-4 4a1 1 0 0 1-1.414 0l-2-2a1 1 0 0 1 1.414-1.414L9 10.586l3.293-3.293a1 1 0 0 1 1.414 1.414Z"/>
+                                    </svg>
+                                    <span class="text-base font-normal leading-tight text-white dark:text-gray-400">{{Carbon\Carbon::parse($chukker->chukker_date)->format('l d F Y')}}</span>
                                 </li>
                             </ul>
-                            <button type="button" class="text-white w-full bg-green-900 hover:bg-blue-700 focus:ring-4 focus:outline-none focus:ring-blue-200 font-large rounded-lg text-lg mt-5 px-5 py-2 justify-center  text-center">Book Now</button>
-                            <span class="ml-1 text-xl font-normal text-white">closes in 15:34:23</span>
+                            @if($chukker->status == 'open')
+                                @if($booking == null)
+                                    <button type="button" onclick="modalHandler(true)" class="text-white w-full bg-green-900 hover:bg-red-700 focus:ring-4 focus:outline-none focus:ring-blue-200 font-large rounded-lg text-lg mt-5 px-5 py-2 justify-center  text-center">Book Now</button>
+                                @else
+                                    <button type="button" class="text-white w-full bg-red-900 hover:bg-red-700 focus:ring-4 focus:outline-none focus:ring-blue-200 font-large rounded-lg text-lg mt-5 px-5 py-2 justify-center  text-center">Cancel</button>
+                                @endif
+                                <span class="ml-1 text-xl font-normal text-white">
+                                    <div class="wrap-countdown mercado-countdown" data-expire="{{ Carbon\Carbon::parse($chukker->closing_time)->format('Y/m/d H:i:s') }}"></div>
+                                </span>
+                            @else
+                                @if($booking != null)
+                                    <button type="button" disabled class="text-white w-full bg-{{$booking->status == 'confirmed' ? 'green' : 'yellow'}}-500 focus:ring-4 focus:outline-none focus:ring-blue-200 font-large rounded-lg text-lg mt-5 px-5 py-2 justify-center  text-center">{{\Illuminate\Support\Str::upper($booking->status)}}</button>
+                                @endif
+                            @endif
+
+
+
+
                         </div>
                     </div>
 
@@ -362,4 +391,70 @@
             </div>
         </div>
     </div>
+
+    <livewire:chukker-booking />
+
+
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+    <script src="{{asset('js/jquery.countdown.min.js')}}"></script>
+    <script>
+        (function($) {
+
+            var MERCADO_JS = {
+                init: function(){
+                    this.mercado_countdown();
+                },
+                mercado_countdown: function() {
+                    if($(".mercado-countdown").length > 0){
+                        $(".mercado-countdown").each( function(index, el){
+                            var _this = $(this),
+                                _expire = _this.data('expire');
+                            _this.countdown(_expire, function(event) {
+                                $(this).html( event.strftime('<span><b>%D</b> Days</span> <span><b>%-H</b> Hrs</span> <span><b>%M</b> Mins</span> <span><b>%S</b> Secs</span>'));
+                            });
+                        });
+                    }
+                },
+
+            }
+
+            window.onload = function () {
+                MERCADO_JS.init();
+            }
+
+        })(window.Zepto || window.jQuery, window, document);
+    </script>
+
+    <script>
+        let modal = document.getElementById("modal");
+        function modalHandler(val) {
+            if (val) {
+                fadeIn(modal);
+            } else {
+                fadeOut(modal);
+            }
+        }
+        function fadeOut(el) {
+            el.style.opacity = 1;
+            (function fade() {
+                if ((el.style.opacity -= 0.1) < 0) {
+                    el.style.display = "none";
+                } else {
+                    requestAnimationFrame(fade);
+                }
+            })();
+        }
+        function fadeIn(el, display) {
+            el.style.opacity = 0;
+            el.style.display = display || "flex";
+            (function fade() {
+                let val = parseFloat(el.style.opacity);
+                if (!((val += 0.2) > 1)) {
+                    el.style.opacity = val;
+                    requestAnimationFrame(fade);
+                }
+            })();
+        }
+    </script>
+
 </x-app-layout>
