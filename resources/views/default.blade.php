@@ -16,7 +16,7 @@
     <div class="text-center">
         <img class="d-block mx-auto" src="{{ asset('images/club_logo_2.png') }}" alt="" width="94" height="135">
         <h2>Enrollment Form</h2>
-        <p class="lead">Welcome to the club membership enrollment form. This enrollment for is to revalidate membership details of our esteemed members and new members.</p>
+        <p class="lead">Welcome to the club membership enrollment form. This enrollment is to revalidate membership details of our esteemed members and new members.</p>
     </div>
 
     <livewire:wizard />
@@ -24,9 +24,9 @@
     <footer class="my-5 pt-5 text-muted text-center text-small">
         <p class="mb-1">&copy; {{today()->year}} Guards Polo Club</p>
         <ul class="list-inline">
-            <li class="list-inline-item"><a href="#">Privacy</a></li>
-            <li class="list-inline-item"><a href="#">Terms</a></li>
-            <li class="list-inline-item"><a href="#">Support</a></li>
+            <li class="list-inline-item"><a href="http://abujaguardspolo.com">Privacy</a></li>
+            <li class="list-inline-item"><a href="http://abujaguardspolo.com">Terms</a></li>
+            <li class="list-inline-item"><a href="http://abujaguardspolo.com">Support</a></li>
         </ul>
     </footer>
 </div>
