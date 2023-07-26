@@ -3,6 +3,7 @@
 namespace App\Providers;
 
 use App\Mail\SendInvoice;
+use App\Nova\PlayerHandicap;
 use App\Nova\PostCategory;
 use App\Nova\Chukker;
 use App\Nova\ChukkerBooking;
@@ -56,6 +57,8 @@ class NovaServiceProvider extends NovaApplicationServiceProvider
                         ->name('Pitch Status'),
                     MenuItem::resource(Chukker::class)
                         ->name('Chukkers'),
+                    MenuItem::resource(PlayerHandicap::class)
+                        ->name('Player Handicaps'),
                     MenuItem::resource(Post::class)
                         ->name('Posts'),
                     MenuItem::resource(Document::class)

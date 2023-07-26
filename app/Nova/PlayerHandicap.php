@@ -3,27 +3,27 @@
 namespace App\Nova;
 
 use Illuminate\Http\Request;
-use Laravel\Nova\Fields\Currency;
+use Laravel\Nova\Fields\BelongsTo;
 use Laravel\Nova\Fields\ID;
-use Laravel\Nova\Fields\Slug;
-use Laravel\Nova\Fields\Text;
+use Laravel\Nova\Fields\Number;
+use Laravel\Nova\Fields\Select;
 use Laravel\Nova\Http\Requests\NovaRequest;
 
-class MembershipCategory extends Resource
+class PlayerHandicap extends Resource
 {
     /**
      * The model the resource corresponds to.
      *
-     * @var class-string<\App\Models\MembershipCategory>
+     * @var class-string<\App\Models\Membership>
      */
-    public static $model = \App\Models\MembershipCategory::class;
+    public static $model = \App\Models\Membership::class;
 
     /**
      * The single value that should be used to represent the resource when being displayed.
      *
      * @var string
      */
-    public static $title = 'name';
+    public static $title = 'user.name';
 
     /**
      * The columns that should be searched.
@@ -31,7 +31,7 @@ class MembershipCategory extends Resource
      * @var array
      */
     public static $search = [
-        'name',
+        'user.name',
     ];
 
     /**
@@ -44,17 +44,17 @@ class MembershipCategory extends Resource
     {
         return [
             ID::make()->sortable(),
-            Text::make('name')
+            BelongsTo::make('User'),
+            Number::make('Player Handicap')
                 ->required()
-                ->sortable(),
-            Slug::make('slug')
-                ->from('name')
-                ->separator('_')
-                ->required()->readonly()
-                ->sortable(),
-            Currency::make('Membership Fee','amount')
-                ->currency('NGN')
-                ->required(),
+                ->min(-2)->max(10),
+            Select::make('Handicap Rating')->options([
+                1 ,
+                2 ,
+                3 ,
+                4 ,
+                5 ,
+            ])
         ];
     }
 

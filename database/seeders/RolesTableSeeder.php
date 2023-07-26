@@ -18,6 +18,13 @@ class RolesTableSeeder extends Seeder
             'slug' => 'administrator',
         ]);
 
+        $member = Role::create([
+            'name' => 'Member',
+            'slug' => 'member',
+        ]);
+
         $administrator->setPermissions(collect(config('nova-permissions.permissions'))->keys()->toArray());
+        $administrator->revoke('view.member');
+        $member->grant('view.member');
     }
 }

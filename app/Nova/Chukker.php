@@ -65,7 +65,7 @@ class Chukker extends Resource
                 'closed' => 'danger',
             ]),
             Number::make('Bookings',function ($request){
-                return \App\Models\ChukkerBooking::query('chukker_id','=',$request->id)->count();
+                return \App\Models\ChukkerBooking::query('chukker_id','=',$this->id)->count();
             }),
             Text::make('Remarks')->hideFromIndex(),
             BelongsTo::make('User')

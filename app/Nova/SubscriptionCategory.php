@@ -6,6 +6,7 @@ use Illuminate\Bus\Queueable;
 use Illuminate\Http\Request;
 use Laravel\Nova\Fields\Currency;
 use Laravel\Nova\Fields\ID;
+use Laravel\Nova\Fields\Slug;
 use Laravel\Nova\Fields\Text;
 use Laravel\Nova\Http\Requests\NovaRequest;
 
@@ -47,6 +48,11 @@ class SubscriptionCategory extends Resource
             ID::make()->sortable(),
             Text::make('name')
                 ->required()
+                ->sortable(),
+            Slug::make('slug')
+                ->from('name')
+                ->separator('_')
+                ->required()->readonly()
                 ->sortable(),
             Currency::make('Subscription Fee','amount')
                 ->currency('NGN')

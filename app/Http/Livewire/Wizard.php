@@ -163,7 +163,7 @@ class Wizard extends Component
         ]);
 
         $access = MemberAccess::all()->where('mobile','=',Auth::user()->mobile)->first();
-        $access->status = 'ENROLLED';
+        $access->status = 'enrolled';
         $access->save();
 
         $this->successMessage = 'Membership Enrolled Successfully. Kindly wait for information validation from management';

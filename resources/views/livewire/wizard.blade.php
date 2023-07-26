@@ -79,8 +79,8 @@
                         <label for="taskGender">Gender:</label>
                         <select wire:model="gender" class="form-control" id="taskGender">
                             <option></option>
-                            <option>Male</option>
-                            <option>Female</option>
+                            <option value="male">Male</option>
+                            <option value="female">Female</option>
                         </select>
                         @error('gender') <span class="invalid-feedback" style="display: block">{{ $message }}</span> @enderror
                     </div>
@@ -139,7 +139,7 @@
                         <select  wire:model="occupation" class="form-control" id="taskOccupation">
                             <option></option>
                             @foreach($occupations as $record)
-                                <option value="{{$record->id}}">{{$record->name}}</option>
+                                <option wire:value="{{$record->id}}">{{$record->name}}</option>
                             @endforeach
                         </select>
                         @error('occupation') <span class="invalid-feedback" style="display: block">{{ $message }}</span> @enderror
@@ -149,7 +149,7 @@
                         <select  wire:model="profession" class="form-control" id="taskProfession">
                             <option></option>
                             @foreach($professions as $record)
-                                <option value="{{$record->id}}">{{$record->name}}</option>
+                                <option wire:value="{{$record->id}}">{{$record->name}}</option>
                             @endforeach
                         </select>
                         @error('profession') <span class="invalid-feedback" style="display: block">{{ $message }}</span> @enderror
@@ -167,6 +167,7 @@
                             <option>Government</option>
                             <option>Force</option>
                             <option>NGO</option>
+                            <option>International</option>
                             <option>Other</option>
                         </select>
                         @error('type_of_organization') <span class="invalid-feedback" style="display: block">{{ $message }}</span> @enderror

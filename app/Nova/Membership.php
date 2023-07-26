@@ -41,7 +41,7 @@ class Membership extends Resource
      * @var array
      */
     public static $search = [
-        'user.name', 'mobile'
+        'user.name', 'mobile','email'
     ];
 
     /**
@@ -145,8 +145,12 @@ class Membership extends Resource
                     Select::make('Type of Organization')
                         ->hideFromIndex()
                         ->options([
-                            'male' => 'Male',
-                            'female' => 'Female',
+                            'Private' => 'Private',
+                            'Government' => 'Government',
+                            'Force' => 'Force',
+                            'NGO' => 'NGO',
+                            'International' => 'International',
+                            'Other' => 'Other',
                         ])->displayUsingLabels(),
                     Text::make('Office Address')
                         ->hideFromIndex()
@@ -157,12 +161,12 @@ class Membership extends Resource
                 Select::make('Area of Interest')
                     ->hideFromIndex()
                     ->options([
-                        'male' => 'Male',
-                        'female' => 'Female',
+                        'Polo Club Membership' => 'Polo Club Membership',
+                        'Social Membership' => 'Social Membership',
                     ])->displayUsingLabels(),
 
 
-                Boolean::make('other_membership')
+                Boolean::make('Other Club Membership','other_membership')
                     ->hideFromIndex(),
                 Text::make('Name of Club','other_club')
                     ->hideFromIndex(),

@@ -17,6 +17,8 @@ class DatabaseSeeder extends Seeder
     {
         $this->call([
             RolesTableSeeder::class,
+            DocumentSeeder::class,
+            MembershipCategorySeeder::class,
         ]);
 
         $user = User::factory()->create([

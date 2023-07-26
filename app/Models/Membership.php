@@ -25,13 +25,13 @@ class Membership extends Model
         'mobile',
         'alt_mobile',
         'email',
-        'occupation',
-        'profession',
+        'occupation_id',
+        'profession_id',
         'name_of_organization',
         'type_of_organization',
         'nationality',
         'date_of_birth',
-        'category',
+        'membership_category_id',
         'area_of_interest',
         'other_membership',
         'other_club',
@@ -45,6 +45,7 @@ class Membership extends Model
         'emergency_contact_name',
         'emergency_contact_mobile',
         'emergency_contact_relationship',
+
     ];
 
     /**
