@@ -12,7 +12,7 @@ use Illuminate\View\View;
 
 class FeeController extends Controller
 {
-    public function create(): View
+    public function index(): View
     {
         return view('fee',[
             'user' => Auth::user(),

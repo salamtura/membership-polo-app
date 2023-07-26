@@ -19,25 +19,27 @@ use Illuminate\Support\Facades\Route;
 Route::get('/', function () {
     return view('welcome');
 });
+Route::middleware(['auth','member','verified'])->group(function () {
+    Route::get('/dashboard', [\App\Http\Controllers\DashboardController::class, 'create'])
+        ->name('dashboard');
+    Route::get('/invoices', [\App\Http\Controllers\InvoiceController::class, 'index'])
+        ->name('invoices');
+    Route::get('/docs', [\App\Http\Controllers\DocumentController::class, 'index'])
+        ->name('docs');
+    Route::get('/fees', [\App\Http\Controllers\FeeController::class, 'index'])
+        ->name('fees');
+    Route::get('/notice-board', [\App\Http\Controllers\PostController::class, 'index'])
+        ->name('notice-board');
+    Route::get('/members', [\App\Http\Controllers\MembersController::class, 'index'])
+        ->name('members');
+});
 
-Route::get('/dashboard', [\App\Http\Controllers\DashboardController::class, 'create'])
-    ->middleware(['auth', 'verified','member'])->name('dashboard');
-
-Route::post('/dashboard', [\App\Http\Controllers\DashboardController::class, 'bookChukker'])
-    ->middleware(['auth', 'verified','member'])->name('dashboard');
-
-Route::get('/invoices', [\App\Http\Controllers\InvoiceController::class, 'create'])
-    ->middleware(['auth', 'verified','member'])->name('invoices');
-Route::get('/docs', [\App\Http\Controllers\DashboardController::class, 'create'])
-    ->middleware(['auth', 'verified','member'])->name('docs');
-Route::get('/fees', [\App\Http\Controllers\FeeController::class, 'create'])
-    ->middleware(['auth', 'verified','member'])->name('fees');
-
-Route::middleware(['auth','member'])->group(function () {
+Route::middleware(['auth', 'member'])->group(function () {
     Route::get('/profile', [ProfileController::class, 'edit'])->name('profile.edit');
     Route::patch('/profile', [ProfileController::class, 'update'])->name('profile.update');
     Route::delete('/profile', [ProfileController::class, 'destroy'])->name('profile.destroy');
 });
+
 
 Route::get('getaccess', [GetAccessController::class, 'create'])
     ->name('getaccess');
