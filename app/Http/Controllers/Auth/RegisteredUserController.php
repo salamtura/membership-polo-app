@@ -21,7 +21,7 @@ class RegisteredUserController extends Controller
      */
     public function create(): View
     {
-        return view('auth.register');//,['data' => MemberAccess::query()->where('id','=',$id)->latest()->get()] );
+        return abort(403);// view('auth.register');//,['data' => MemberAccess::query()->where('id','=',$id)->latest()->get()] );
     }
 
     /**

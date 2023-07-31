@@ -37,16 +37,16 @@
 
 
 
-    <div class="bg-gray-100">
+    <div class="bg-gray-200">
 
-        <div class="container mx-auto my-5 p-5">
+        <div class="container mx-auto p-5">
             <div class="md:flex no-wrap md:-mx-2 ">
                 <!-- Left Side -->
                 <div class="w-full md:w-3/12 md:mx-2">
                     <!-- Profile Card -->
                     <div class="bg-white p-3 border-t-4 border-green-400">
                         <div class="image overflow-hidden">
-                            <img class="h-auto w-full mx-auto"
+                            <img class="h-auto w-full mx-auto "
                                  src="{{ $user->membership->profile_photo != null ?  'storage/'.$user->membership->profile_photo : 'images/profile.png'}}"
                                  alt="">
                         </div>
@@ -60,21 +60,21 @@
                             <li class="flex items-center py-3">
                                 <span>Player Handicap</span>
                                 <span class="ml-auto"><span
-                                        class="bg-gray-500 py-1 px-2 rounded text-white text-sm">{{$user->membership->player_handicap}}</span></span>
+                                        class="bg-gray-500 py-1 px-2 rounded-xl text-white text-sm">{{$user->membership->player_handicap}}</span></span>
                             </li>
                             <li class="flex items-center py-3">
                                 <span>Membership Status</span>
                                 <span class="ml-auto"><span
-                                        class="bg-green-500 py-1 px-2 rounded text-white text-sm">{{$user->membership->membership_status}}</span></span>
+                                        class="{{$user->membership->membership_status == 'active' ? 'bg-green-500' : 'bg-red-500'}} py-1 px-2 rounded text-white text-sm">{{\Illuminate\Support\Str::upper($user->membership->membership_status)}}</span></span>
                             </li>
                             <li class="flex items-center py-3">
                                 <span>Subscription Status</span>
                                 <span class="ml-auto"><span
-                                        class="bg-green-500 py-1 px-2 rounded text-white text-sm">{{$user->membership->subscription_status}}</span></span>
+                                        class="{{$user->membership->subscription_status == 'active' ? 'bg-green-500' : 'bg-red-500'}} py-1 px-2 rounded text-white text-sm">{{\Illuminate\Support\Str::upper($user->membership->subscription_status)}}</span></span>
                             </li>
                             <li class="flex items-center py-3">
                                 <span>Member since</span>
-                                <span class="ml-auto">{{date('d-m-Y', strtotime($user->membership->membership_since))}}</span>
+                                <span class="ml-auto">{{date('Y', strtotime($user->membership->membership_since))}}</span>
                             </li>
                         </ul>
                     </div>
@@ -83,7 +83,7 @@
 
                 </div>
                 <!-- Right Side -->
-                <div class="w-full md:w-9/12 mx-2 h-64">
+                <div class="w-full md:w-9/12 mx-2 ">
                     <div class=" grid md:grid-cols-2 sm:grid-cols-1">
                         @if( \Carbon\Carbon::now()->greaterThan($pitch->to_date) )
                             @php $pitch->status = 'closed'; @endphp
@@ -139,7 +139,8 @@
                                 @if($booking == null)
                                     <button type="button" onclick="modalHandler(true)" class="text-white w-full bg-green-900 hover:bg-red-700 focus:ring-4 focus:outline-none focus:ring-blue-200 font-large rounded-lg text-lg mt-5 px-5 py-2 justify-center  text-center">Book Now</button>
                                 @else
-                                    <button type="button" class="text-white w-full bg-red-900 hover:bg-red-700 focus:ring-4 focus:outline-none focus:ring-blue-200 font-large rounded-lg text-lg mt-5 px-5 py-2 justify-center  text-center">Cancel</button>
+                                    <livewire:cancel-booking :booking="$booking" />
+{{--                                    <button type="button" wire:click="cancelBooking({{$booking->id}})" class="text-white w-full bg-red-900 hover:bg-red-700 focus:ring-4 focus:outline-none focus:ring-blue-200 font-large rounded-lg text-lg mt-5 px-5 py-2 justify-center  text-center">Cancel</button>--}}
                                 @endif
                                 <span class="ml-1 text-xl font-normal text-white">
                                     <div class="wrap-countdown mercado-countdown" data-expire="{{ Carbon\Carbon::parse($chukker->closing_time)->format('Y/m/d H:i:s') }}"></div>
@@ -149,10 +150,6 @@
                                     <button type="button" disabled class="text-white w-full bg-{{$booking->status == 'confirmed' ? 'green' : 'yellow'}}-500 focus:ring-4 focus:outline-none focus:ring-blue-200 font-large rounded-lg text-lg mt-5 px-5 py-2 justify-center  text-center">{{\Illuminate\Support\Str::upper($booking->status)}}</button>
                                 @endif
                             @endif
-
-
-
-
                         </div>
                     </div>
 
@@ -163,7 +160,7 @@
                         <div class="grid md:grid-cols-4 sm:grid-cols-2">
                             <div class="bg-white m-3 p-3 shadow-sm rounded-sm text-center">
                                 <div class="items-center space-x-2 font-semibold text-gray-900 leading-8">
-                                <span clas="text-green-500">
+                                <span class="text-green-500">
 {{--                                    <svg class="h-5" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="w-6 h-6">--}}
 {{--                                      <path stroke-linecap="round" stroke-linejoin="round" d="M2.25 18.75a60.07 60.07 0 0115.797 2.101c.727.198 1.453-.342 1.453-1.096V18.75M3.75 4.5v.75A.75.75 0 013 6h-.75m0 0v-.375c0-.621.504-1.125 1.125-1.125H20.25M2.25 6v9m18-10.5v.75c0 .414.336.75.75.75h.75m-1.5-1.5h.375c.621 0 1.125.504 1.125 1.125v9.75c0 .621-.504 1.125-1.125 1.125h-.375m1.5-1.5H21a.75.75 0 00-.75.75v.75m0 0H3.75m0 0h-.375a1.125 1.125 0 01-1.125-1.125V15m1.5 1.5v-.75A.75.75 0 003 15h-.75M15 10.5a3 3 0 11-6 0 3 3 0 016 0zm3 0h.008v.008H18V10.5zm-12 0h.008v.008H6V10.5z" />--}}
 {{--                                    </svg>--}}
@@ -178,7 +175,7 @@
 
                             <div class="bg-white m-3 p-3 shadow-sm rounded-sm text-center">
                                 <div class="items-center space-x-2 font-semibold text-gray-900 leading-8">
-                                <span clas="text-green-500">
+                                <span class="text-green-500">
 {{--                                    <svg class="h-5" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="w-6 h-6">--}}
                                     {{--                                      <path stroke-linecap="round" stroke-linejoin="round" d="M2.25 18.75a60.07 60.07 0 0115.797 2.101c.727.198 1.453-.342 1.453-1.096V18.75M3.75 4.5v.75A.75.75 0 013 6h-.75m0 0v-.375c0-.621.504-1.125 1.125-1.125H20.25M2.25 6v9m18-10.5v.75c0 .414.336.75.75.75h.75m-1.5-1.5h.375c.621 0 1.125.504 1.125 1.125v9.75c0 .621-.504 1.125-1.125 1.125h-.375m1.5-1.5H21a.75.75 0 00-.75.75v.75m0 0H3.75m0 0h-.375a1.125 1.125 0 01-1.125-1.125V15m1.5 1.5v-.75A.75.75 0 003 15h-.75M15 10.5a3 3 0 11-6 0 3 3 0 016 0zm3 0h.008v.008H18V10.5zm-12 0h.008v.008H6V10.5z" />--}}
                                     {{--                                    </svg>--}}
@@ -192,7 +189,7 @@
                             </div>
                             <div class="bg-white m-3 p-3 shadow-sm rounded-sm text-center">
                                 <div class="items-center space-x-2 font-semibold text-gray-900 leading-8">
-                                <span clas="text-green-500">
+                                <span class="text-green-500">
 {{--                                    <svg class="h-5" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="w-6 h-6">--}}
                                     {{--                                      <path stroke-linecap="round" stroke-linejoin="round" d="M2.25 18.75a60.07 60.07 0 0115.797 2.101c.727.198 1.453-.342 1.453-1.096V18.75M3.75 4.5v.75A.75.75 0 013 6h-.75m0 0v-.375c0-.621.504-1.125 1.125-1.125H20.25M2.25 6v9m18-10.5v.75c0 .414.336.75.75.75h.75m-1.5-1.5h.375c.621 0 1.125.504 1.125 1.125v9.75c0 .621-.504 1.125-1.125 1.125h-.375m1.5-1.5H21a.75.75 0 00-.75.75v.75m0 0H3.75m0 0h-.375a1.125 1.125 0 01-1.125-1.125V15m1.5 1.5v-.75A.75.75 0 003 15h-.75M15 10.5a3 3 0 11-6 0 3 3 0 016 0zm3 0h.008v.008H18V10.5zm-12 0h.008v.008H6V10.5z" />--}}
                                     {{--                                    </svg>--}}
@@ -206,16 +203,16 @@
                             </div>
                             <div class="bg-white m-3 p-3 shadow-sm rounded-sm text-center">
                                 <div class="items-center space-x-2 font-semibold text-gray-900 leading-8">
-                                <span clas="text-green-500">
+                                <span class="text-green-500">
 {{--                                    <svg class="h-5" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="w-6 h-6">--}}
                                     {{--                                      <path stroke-linecap="round" stroke-linejoin="round" d="M2.25 18.75a60.07 60.07 0 0115.797 2.101c.727.198 1.453-.342 1.453-1.096V18.75M3.75 4.5v.75A.75.75 0 013 6h-.75m0 0v-.375c0-.621.504-1.125 1.125-1.125H20.25M2.25 6v9m18-10.5v.75c0 .414.336.75.75.75h.75m-1.5-1.5h.375c.621 0 1.125.504 1.125 1.125v9.75c0 .621-.504 1.125-1.125 1.125h-.375m1.5-1.5H21a.75.75 0 00-.75.75v.75m0 0H3.75m0 0h-.375a1.125 1.125 0 01-1.125-1.125V15m1.5 1.5v-.75A.75.75 0 003 15h-.75M15 10.5a3 3 0 11-6 0 3 3 0 016 0zm3 0h.008v.008H18V10.5zm-12 0h.008v.008H6V10.5z" />--}}
                                     {{--                                    </svg>--}}
                                 </span>
-                                    <span class="tracking-wide">Other</span>
+                                    <span class="tracking-wide">Chukkers</span>
                                 </div>
                                 <div class="text-center">
                                     <div class="text-teal-600 text-xl font-bold">0</div>
-                                    <div class="text-gray-500 text-xs">March 2020 - Now</div>
+                                    <div class="text-gray-500 text-xs">Chukkers played</div>
                                 </div>
                             </div>
                         </div>
@@ -225,7 +222,7 @@
                     <!-- About Section -->
                     <div class="bg-white p-3 shadow-sm rounded-sm">
                         <div class="flex items-center space-x-2 font-semibold text-gray-900 leading-8">
-                        <span clas="text-green-500">
+                        <span class="text-green-500">
                             <svg class="h-5" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24"
                                  stroke="currentColor">
                                 <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
@@ -272,9 +269,9 @@
                                 </div>
                             </div>
                         </div>
-                        <button
-                            class="block w-full text-blue-800 text-sm font-semibold rounded-lg hover:bg-gray-100 focus:outline-none focus:shadow-outline focus:bg-gray-100 hover:shadow-xs p-3 my-4">Show
-                            Full Information</button>
+                        <a href="/profile-details"
+                            class="text-center block w-full text-blue-800 text-sm font-semibold rounded-lg hover:bg-gray-100 focus:outline-none focus:shadow-outline focus:bg-gray-100 hover:shadow-xs p-3 my-4">Show
+                            Full Information</a>
                     </div>
                     <!-- End of about section -->
 
@@ -285,7 +282,7 @@
                         <div class="grid grid-cols-2">
                             <div>
                                 <div class="flex items-center space-x-2 font-semibold text-gray-900 leading-8 mb-3">
-                                    <span clas="text-green-500">
+                                    <span class="text-green-500">
                                         <svg class="h-5" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24"
                                              stroke="currentColor">
                                             <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
@@ -296,26 +293,26 @@
                                 </div>
                                 @if($user->membership->stables->count() > 0)
                                     @foreach($user->membership->stables as $stable)
-                                        <ul class="list-inside space-y-2">
+                                        <ul class="list-inside space-y-2 pl-3">
                                             <li class="grid grid-cols-2">
                                                 <div class="text-teal-600">Description</div>
                                                 <div class="text-gray-500">{{$stable->description}}</div>
                                             </li>
                                             <li class="grid grid-cols-2">
                                                 <div class="text-teal-600">Number of Boxes</div>
-                                                <div class="text-gray-500 text-xs">{{$stable->number_of_boxes}}</div>
+                                                <div class="text-gray-500 ">{{$stable->number_of_boxes}}</div>
                                             </li>
                                             <li class="grid grid-cols-2">
                                                 <div class="text-teal-600">Number of Rooms</div>
-                                                <div class="text-gray-500 text-xs">{{$stable->number_of_rooms}}</div>
+                                                <div class="text-gray-500 ">{{$stable->number_of_rooms}}</div>
                                             </li>
                                             <li class="grid grid-cols-2">
                                                 <div class="text-teal-600 grid-flow-dense">Number of Lounges</div>
-                                                <div class="text-gray-500 text-xs">{{$stable->number_of_lounges}}</div>
+                                                <div class="text-gray-500 ">{{$stable->number_of_lounges}}</div>
                                             </li>
                                             <li class="grid grid-cols-2">
                                                 <div class="text-teal-600">Number of Stores</div>
-                                                <div class="text-gray-500 text-xs">{{$stable->number_of_stores}}</div>
+                                                <div class="text-gray-500 ">{{$stable->number_of_stores}}</div>
                                             </li>
                                         </ul>
                                     @endforeach
@@ -326,7 +323,7 @@
 
                             <div>
                                 <div class="flex items-center space-x-2 font-semibold text-gray-900 leading-8 mb-3">
-                                <span clas="text-green-500">
+                                <span class="text-green-500">
                                     <svg class="h-5" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24"
                                          stroke="currentColor">
                                         <path fill="#fff" d="M12 14l9-5-9-5-9 5 9 5z" />
@@ -336,17 +333,15 @@
                                               d="M12 14l9-5-9-5-9 5 9 5zm0 0l6.16-3.422a12.083 12.083 0 01.665 6.479A11.952 11.952 0 0012 20.055a11.952 11.952 0 00-6.824-2.998 12.078 12.078 0 01.665-6.479L12 14zm-4 6v-7.5l4-2.222" />
                                     </svg>
                                 </span>
-                                    <span class="tracking-wide">Other</span>
+                                    <span class="tracking-wide">Notice Board</span>
                                 </div>
                                 <ul class="list-inside space-y-2">
-                                    <li>
-                                        <div class="text-teal-600">Masters Degree in Oxford</div>
-                                        <div class="text-gray-500 text-xs">March 2020 - Now</div>
-                                    </li>
-                                    <li>
-                                        <div class="text-teal-600">Bachelors Degreen in LPU</div>
-                                        <div class="text-gray-500 text-xs">March 2020 - Now</div>
-                                    </li>
+                                    @foreach($notices as $notice)
+                                        <li>
+                                            <div class="text-teal-600">{{$notice->title}}</div>
+                                            <div class="text-gray-500 text-xs">{{$notice->created_at}}</div>
+                                        </li>
+                                    @endforeach
                                 </ul>
                             </div>
                         </div>
@@ -359,15 +354,15 @@
                     <div class="bg-white p-3 shadow-sm rounded-sm">
                         <div class="grid grid-cols-1">
                             <!-- Friends card -->
-                            <div class="bg-white p-3 hover:shadow">
+                            <div class="bg-white p-3 ">
                                 <div class="flex items-center space-x-3 font-semibold text-gray-900 text-xl leading-8">
-                        <span class="text-green-500">
-                            <svg class="h-5 fill-current" xmlns="http://www.w3.org/2000/svg" fill="none"
-                                 viewBox="0 0 24 24" stroke="currentColor">
-                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
-                                      d="M17 20h5v-2a3 3 0 00-5.356-1.857M17 20H7m10 0v-2c0-.656-.126-1.283-.356-1.857M7 20H2v-2a3 3 0 015.356-1.857M7 20v-2c0-.656.126-1.283.356-1.857m0 0a5.002 5.002 0 019.288 0M15 7a3 3 0 11-6 0 3 3 0 016 0zm6 3a2 2 0 11-4 0 2 2 0 014 0zM7 10a2 2 0 11-4 0 2 2 0 014 0z" />
-                            </svg>
-                        </span>
+                                    <span class="text-green-500">
+                                        <svg class="h-5 fill-current" xmlns="http://www.w3.org/2000/svg" fill="none"
+                                             viewBox="0 0 24 24" stroke="currentColor">
+                                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                                                  d="M17 20h5v-2a3 3 0 00-5.356-1.857M17 20H7m10 0v-2c0-.656-.126-1.283-.356-1.857M7 20H2v-2a3 3 0 015.356-1.857M7 20v-2c0-.656.126-1.283.356-1.857m0 0a5.002 5.002 0 019.288 0M15 7a3 3 0 11-6 0 3 3 0 016 0zm6 3a2 2 0 11-4 0 2 2 0 014 0zM7 10a2 2 0 11-4 0 2 2 0 014 0z" />
+                                        </svg>
+                                    </span>
                                     <span>Members</span>
                                 </div>
                                 <div class="grid grid-cols-6">
@@ -380,9 +375,9 @@
                                         </div>
                                     @endforeach
                                 </div>
-                                <button
-                                    class="block w-full text-blue-800 text-sm font-semibold rounded-lg hover:bg-gray-100 focus:outline-none focus:shadow-outline focus:bg-gray-100 hover:shadow-xs p-3 my-4">
-                                    Show All Members</button>
+                                <a href="/members"
+                                    class="text-center block w-full text-blue-800 text-sm font-semibold rounded-lg hover:bg-gray-100 focus:outline-none focus:shadow-outline focus:bg-gray-100 hover:shadow-xs p-3 my-4">
+                                    Show All Members</a>
                             </div>
                             <!-- End of friends card -->
                         </div>

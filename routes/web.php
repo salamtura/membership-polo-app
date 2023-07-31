@@ -24,6 +24,13 @@ Route::middleware(['auth','member','verified'])->group(function () {
         ->name('dashboard');
     Route::get('/invoices', [\App\Http\Controllers\InvoiceController::class, 'index'])
         ->name('invoices');
+    Route::get('/invoice-details/{id}', [
+        function ($id) {
+            return view('invoice-details',
+                ['invoice' => \App\Models\Invoice::query()->where('id','=',$id)->first()] );
+        }
+    ])
+        ->name('invoice-details');
     Route::get('/docs', [\App\Http\Controllers\DocumentController::class, 'index'])
         ->name('docs');
     Route::get('/fees', [\App\Http\Controllers\FeeController::class, 'index'])
@@ -32,6 +39,14 @@ Route::middleware(['auth','member','verified'])->group(function () {
         ->name('notice-board');
     Route::get('/members', [\App\Http\Controllers\MembersController::class, 'index'])
         ->name('members');
+
+    Route::get('/profile-details', [
+        function () {
+            return view('profile',
+                ['user' => Auth::user()] );
+        }
+    ])
+        ->name('profile-details');
 });
 
 Route::middleware(['auth', 'member'])->group(function () {
@@ -48,6 +63,9 @@ Route::get('wizard', [ 'middleware' => 'wizard', function () {
     return view('default');
 }]);
 
+// Laravel 8 & 9
+Route::post('/pay', [App\Http\Controllers\PaymentController::class, 'redirectToGateway'])->name('pay');
 
+Route::get('/payment/callback', 'PaymentController@handleGatewayCallback');
 
 require __DIR__.'/auth.php';

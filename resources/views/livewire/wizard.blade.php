@@ -52,12 +52,12 @@
                     </div>
                     <div class="col-md-4 mb-3">
                         <label for="taskEmail">Email:</label>
-                        <input type="text" wire:model="email" class="form-control" id="taskEmail">
+                        <input type="text" wire:model="email" readonly class="form-control" id="taskEmail">
                         @error('email') <span class="invalid-feedback help-text-error" style="display: block">{{ $message }}</span> @enderror
                     </div>
                     <div class="col-md-4 mb-3">
                         <label for="taskMobile">Mobile:</label>
-                        <input type="text" wire:model="mobile" class="form-control" id="taskMobile">
+                        <input type="text" wire:model="mobile" readonly class="form-control" id="taskMobile">
                         @error('mobile') <span class="invalid-feedback" style="display: block">{{ $message }}</span> @enderror
                     </div>
                     <div class="col-md-4 mb-3">
@@ -139,7 +139,7 @@
                         <select  wire:model="occupation" class="form-control" id="taskOccupation">
                             <option></option>
                             @foreach($occupations as $record)
-                                <option wire:value="{{$record->id}}">{{$record->name}}</option>
+                                <option value="{{$record->id}}">{{$record->name}}</option>
                             @endforeach
                         </select>
                         @error('occupation') <span class="invalid-feedback" style="display: block">{{ $message }}</span> @enderror
@@ -149,7 +149,7 @@
                         <select  wire:model="profession" class="form-control" id="taskProfession">
                             <option></option>
                             @foreach($professions as $record)
-                                <option wire:value="{{$record->id}}">{{$record->name}}</option>
+                                <option value="{{$record->id}}" >{{$record->name}}</option>
                             @endforeach
                         </select>
                         @error('profession') <span class="invalid-feedback" style="display: block">{{ $message }}</span> @enderror

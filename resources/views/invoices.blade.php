@@ -7,8 +7,9 @@
 
         <div class="py-12">
             <div class="max-w-7xl mx-auto sm:px-6 lg:px-8">
-                <div class="bg-white dark:bg-gray-800 overflow-hidden shadow-sm sm:rounded-lg">
-                    <div class="p-6 text-gray-900 dark:text-gray-100">
+                <div class="bg-white overflow-hidden shadow-sm sm:rounded-lg">
+                    <div class="p-6 text-gray-900 ">
+
                         <table class="min-w-full divide-y divide-gray-200 table-fixed">
                             <thead class="bg-gray-100 border-b-2">
                                 <tr>
@@ -31,9 +32,9 @@
                                         <td class="py-4 px-6 text-sm font-medium text-gray-900 whitespace-nowrap">{{'₦'.number_format($invoice->total_amount, 2)}}</td>
                                         <td class="py-4 px-6 text-sm font-medium text-gray-900 whitespace-nowrap">{{date('d M Y', strtotime($invoice->invoice_date))}}</td>
                                         <td class="py-4 px-6 text-sm font-medium text-gray-900 whitespace-nowrap">{{date('d M Y', strtotime($invoice->invoice_due_date))}}</td>
-                                        <td class="py-4 px-6 text-sm font-medium text-gray-900 whitespace-nowrap"><span class="">{{$invoice->status}}</span></td>
-                                        <td class="py-4 px-6 text-sm font-medium text-gray-900 whitespace-nowrap">
-                                            <button class="btn btn-blue" {{$invoice->status == 'unpaid' ? '':'disabled'}}>Pay online</button>
+                                        <td class="py-4 px-6 text-sm font-medium text-gray-900 whitespace-nowrap"><span class="{{$invoice->status == 'active' ? 'bg-green-500' : 'bg-red-500'}} py-1 px-2 rounded text-white text-sm">{{$invoice->status}}</span></td>
+                                        <td class="py-4 px-6 ">
+                                            <a href="/invoice-details/{{$invoice->id}}" >view invoice</a>
                                         </td>
                                     </tr>
                                 @endforeach

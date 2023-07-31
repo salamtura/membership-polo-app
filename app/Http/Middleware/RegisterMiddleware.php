@@ -17,7 +17,6 @@ class RegisterMiddleware
     {
         $routes = ["faq", "support", "help"];
         $route = $request->route('accesskey');
-
         // Redirect to custom page if it doesn't relate to a profile
         if (in_array($route, $routes)) {
             return new Response(view($route));

@@ -29,6 +29,8 @@ class Invoice extends Model
         'stable_id',
         'membership_id',
         'penalty_id',
+        'created_at',
+        'updated_at'
     ];
 
     protected $casts = [

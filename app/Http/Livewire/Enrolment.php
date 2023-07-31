@@ -98,8 +98,9 @@ class Enrolment extends Component
                 }
             }
             $token = Crypt::encryptString($id);
-
-            return redirect()->intended('register/'.$token);
+//            dd('here + '.$token);
+            return redirect('register/'.$token);
+//            return redirect()->intended('register/'.$token);
         }
 
         $this->code = "";

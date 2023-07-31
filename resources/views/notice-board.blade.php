@@ -11,7 +11,7 @@
             <div class="flex flex-wrap -m-4">
                 @foreach($posts as $post)
                     <div class="p-4 md:w-1/3">
-                        <div class="h-full rounded-xl shadow-cla-blue bg-gradient-to-r from-indigo-50 to-blue-50 overflow-hidden">
+                        <div class="h-full border rounded-xl shadow-cla-blue bg-gradient-to-r from-indigo-50 to-blue-50 overflow-hidden">
                             <img class="lg:h-48 md:h-36 w-full object-cover object-center scale-110 transition-all duration-400 hover:scale-100"
                                  src="{{ $post->image != null ?  'storage/'.$post->image : 'images/notice.png'}}" alt="blog">
                             <div class="p-6">

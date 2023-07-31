@@ -39,6 +39,9 @@ class Wizard extends Component
     }
 
     public function mount(){
+        $this->email = Auth::user()->email;
+        $this->mobile = Auth::user()->mobile;
+
         $this->membershipCategories = MembershipCategory::orderby('name','asc')
             ->select('*')
             ->get();
@@ -51,6 +54,8 @@ class Wizard extends Component
             ->select('*')
             ->get();
     }
+
+
 
     /**
      * Write code on Method

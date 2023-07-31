@@ -11,8 +11,8 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::table('membership_categories', function (Blueprint $table) {
-//            $table->string('slug')->unique()->change();
+        Schema::table('users', function (Blueprint $table) {
+            $table->timestamp('last_login_at')->nullable();
         });
     }
 
@@ -21,7 +21,7 @@ return new class extends Migration
      */
     public function down(): void
     {
-        Schema::table('membership_categories', function (Blueprint $table) {
+        Schema::table('users', function (Blueprint $table) {
             //
         });
     }
