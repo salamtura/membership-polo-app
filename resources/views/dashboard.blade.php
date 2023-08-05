@@ -84,74 +84,95 @@
                 </div>
                 <!-- Right Side -->
                 <div class="w-full md:w-9/12 mx-2 ">
-                    <div class=" grid md:grid-cols-2 sm:grid-cols-1">
-                        @if( \Carbon\Carbon::now()->greaterThan($pitch->to_date) )
-                            @php $pitch->status = 'closed'; @endphp
-                        @endif
-                        <div class="w-full max-w-md p-4 {{$pitch->status =='open' ? 'bg-green-500' : 'bg-red-500'}} border border-gray-200 rounded-lg shadow sm:p-8">
-                            <h5 class="text-xl font-medium text-black">Pitch Status</h5>
-                            <div class="flex items-baseline {{$pitch->status =='open' ? 'text-green-900' : 'text-red-900'}}">
-                                <span class="text-5xl font-extrabold tracking-tight">{{\Illuminate\Support\Str::upper($pitch->status)}}</span>
-{{--                                <span class="ml-1 text-xl font-normal text-gray-500 dark:text-gray-400">/month</span>--}}
+                    @if($invoices->count() > 0 || $penalties->count() > 0)
+                        <div class="bg-red-100 border-t-4 border-red-500 rounded-b text-teal-900 px-4 py-3 shadow-md " role="alert">
+                            <div class="flex">
+                                <div class="py-1"><svg class="fill-current h-6 w-6 text-red-500 mr-4" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20"><path d="M2.93 17.07A10 10 0 1 1 17.07 2.93 10 10 0 0 1 2.93 17.07zm12.73-1.41A8 8 0 1 0 4.34 4.34a8 8 0 0 0 11.32 11.32zM9 11V9h2v6H9v-4zm0-6h2v2H9V5z"/></svg></div>
+                                <div>
+                                    <p class="font-bold">Profile Restricted</p>
+                                    <p class="text-sm mt-2">
+                                        Dear Member,<br><br>
+                                        Your profile has been restricted due to unpaid invoices or penalties associated with your profile.
+                                        Therefor you are unable to view pitch status or book for chukkers.
+                                        Kindly make payment for any outstanding invoices to unrestrict your profile.<br><br>
+                                        Thank you for understanding.<br>
+                                        Management.
+                                    </p>
+                                </div>
                             </div>
-                            <ul role="list" class="space-y-5 my-7">
-                                <li class="flex space-x-3 items-center">
-                                    <svg class="flex-shrink-0 w-4 h-4 text-black" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="currentColor" viewBox="0 0 20 20">
-                                        <path d="M10 .5a9.5 9.5 0 1 0 9.5 9.5A9.51 9.51 0 0 0 10 .5Zm3.707 8.207-4 4a1 1 0 0 1-1.414 0l-2-2a1 1 0 0 1 1.414-1.414L9 10.586l3.293-3.293a1 1 0 0 1 1.414 1.414Z"/>
-                                    </svg>
-                                    <span class="text-base font-normal leading-tight text-white">{{\Illuminate\Support\Str::upper($pitch->description)}}</span>
-                                </li>
-                                @if($pitch->status =='open')
+                        </div>
+                    @else
+                        <div class=" grid md:grid-cols-2 sm:grid-cols-1">
+                            @if( \Carbon\Carbon::now()->greaterThan($pitch->to_date) )
+                                @php $pitch->status = 'closed'; @endphp
+                            @endif
+                            <div class="w-full max-w-md p-4 {{$pitch->status =='open' ? 'bg-green-500' : 'bg-red-500'}} border border-gray-200 rounded-lg shadow sm:p-8">
+                                <h5 class="text-xl font-medium text-black">Pitch Status</h5>
+                                <div class="flex items-baseline {{$pitch->status =='open' ? 'text-green-900' : 'text-red-900'}}">
+                                    <span class="text-5xl font-extrabold tracking-tight">{{\Illuminate\Support\Str::upper($pitch->status)}}</span>
+                                    {{--                                <span class="ml-1 text-xl font-normal text-gray-500 dark:text-gray-400">/month</span>--}}
+                                </div>
+                                <ul role="list" class="space-y-5 my-7">
                                     <li class="flex space-x-3 items-center">
                                         <svg class="flex-shrink-0 w-4 h-4 text-black" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="currentColor" viewBox="0 0 20 20">
                                             <path d="M10 .5a9.5 9.5 0 1 0 9.5 9.5A9.51 9.51 0 0 0 10 .5Zm3.707 8.207-4 4a1 1 0 0 1-1.414 0l-2-2a1 1 0 0 1 1.414-1.414L9 10.586l3.293-3.293a1 1 0 0 1 1.414 1.414Z"/>
                                         </svg>
-                                        <span class="text-base font-normal leading-tight text-white">{{'From ' . date('l, M d - H:ia', strtotime($pitch->from_date)) . ' to ' . date('l, M d H:ia', strtotime($pitch->to_date))}}</span>
+                                        <span class="text-base font-normal leading-tight text-white">{{\Illuminate\Support\Str::upper($pitch->description)}}</span>
                                     </li>
-                                @endif
-                            </ul>
-                        </div>
-
-                        @if( \Carbon\Carbon::now()->greaterThan($chukker->closing_time) || $pitch->status =='closed' )
-                            @php $chukker->status = 'closed'; @endphp
-                        @endif
-                        <div class="w-full max-w-md p-4 {{$chukker->status == 'open' ? 'bg-green-500' : 'bg-red-500'}} border border-gray-200 rounded-lg shadow sm:p-8 ">
-                            <h5 class="text-xl font-medium text-black">Chukker Booking</h5>
-                            <div class="flex items-baseline {{$chukker->status == 'open' ? 'text-green-900' : 'text-red-900'}}">
-                                <span class="text-5xl font-extrabold tracking-tight">{{\Illuminate\Support\Str::upper($chukker->status)}}</span>
-{{--                                <span class="ml-1 text-xl font-normal text-white">15:34:23</span>--}}
+                                    @if($pitch->status =='open')
+                                        <li class="flex space-x-3 items-center">
+                                            <svg class="flex-shrink-0 w-4 h-4 text-black" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="currentColor" viewBox="0 0 20 20">
+                                                <path d="M10 .5a9.5 9.5 0 1 0 9.5 9.5A9.51 9.51 0 0 0 10 .5Zm3.707 8.207-4 4a1 1 0 0 1-1.414 0l-2-2a1 1 0 0 1 1.414-1.414L9 10.586l3.293-3.293a1 1 0 0 1 1.414 1.414Z"/>
+                                            </svg>
+                                            <span class="text-base font-normal leading-tight text-white">{{'From ' . date('l, M d - H:ia', strtotime($pitch->from_date)) . ' to ' . date('l, M d H:ia', strtotime($pitch->to_date))}}</span>
+                                        </li>
+                                    @endif
+                                </ul>
                             </div>
-                            <ul role="list" class="space-y-5 my-7">
-                                <li class="flex space-x-3 items-center">
-                                    <svg class="flex-shrink-0 w-4 h-4 text-black" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="currentColor" viewBox="0 0 20 20">
-                                        <path d="M10 .5a9.5 9.5 0 1 0 9.5 9.5A9.51 9.51 0 0 0 10 .5Zm3.707 8.207-4 4a1 1 0 0 1-1.414 0l-2-2a1 1 0 0 1 1.414-1.414L9 10.586l3.293-3.293a1 1 0 0 1 1.414 1.414Z"/>
-                                    </svg>
-                                    <span class="text-base font-normal leading-tight text-white dark:text-gray-400">{{\Illuminate\Support\Str::upper($chukker->chukker_no)}}</span>
-                                </li>
-                                <li class="flex space-x-3 items-center">
-                                    <svg class="flex-shrink-0 w-4 h-4 text-black" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="currentColor" viewBox="0 0 20 20">
-                                        <path d="M10 .5a9.5 9.5 0 1 0 9.5 9.5A9.51 9.51 0 0 0 10 .5Zm3.707 8.207-4 4a1 1 0 0 1-1.414 0l-2-2a1 1 0 0 1 1.414-1.414L9 10.586l3.293-3.293a1 1 0 0 1 1.414 1.414Z"/>
-                                    </svg>
-                                    <span class="text-base font-normal leading-tight text-white dark:text-gray-400">{{Carbon\Carbon::parse($chukker->chukker_date)->format('l d F Y')}}</span>
-                                </li>
-                            </ul>
-                            @if($chukker->status == 'open')
-                                @if($booking == null)
-                                    <button type="button" onclick="modalHandler(true)" class="text-white w-full bg-green-900 hover:bg-red-700 focus:ring-4 focus:outline-none focus:ring-blue-200 font-large rounded-lg text-lg mt-5 px-5 py-2 justify-center  text-center">Book Now</button>
-                                @else
-                                    <livewire:cancel-booking :booking="$booking" />
-{{--                                    <button type="button" wire:click="cancelBooking({{$booking->id}})" class="text-white w-full bg-red-900 hover:bg-red-700 focus:ring-4 focus:outline-none focus:ring-blue-200 font-large rounded-lg text-lg mt-5 px-5 py-2 justify-center  text-center">Cancel</button>--}}
-                                @endif
-                                <span class="ml-1 text-xl font-normal text-white">
+
+                            @if( \Carbon\Carbon::now()->greaterThan($chukker->closing_time) || $pitch->status =='closed' )
+                                @php $chukker->status = 'closed'; @endphp
+                            @endif
+                            <div class="w-full max-w-md p-4 {{$chukker->status == 'open' ? 'bg-green-500' : 'bg-red-500'}} border border-gray-200 rounded-lg shadow sm:p-8 ">
+                                <h5 class="text-xl font-medium text-black">Chukker Booking</h5>
+                                <div class="flex items-baseline {{$chukker->status == 'open' ? 'text-green-900' : 'text-red-900'}}">
+                                    <span class="text-5xl font-extrabold tracking-tight">{{\Illuminate\Support\Str::upper($chukker->status)}}</span>
+                                    {{--                                <span class="ml-1 text-xl font-normal text-white">15:34:23</span>--}}
+                                </div>
+                                <ul role="list" class="space-y-5 my-7">
+                                    <li class="flex space-x-3 items-center">
+                                        <svg class="flex-shrink-0 w-4 h-4 text-black" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="currentColor" viewBox="0 0 20 20">
+                                            <path d="M10 .5a9.5 9.5 0 1 0 9.5 9.5A9.51 9.51 0 0 0 10 .5Zm3.707 8.207-4 4a1 1 0 0 1-1.414 0l-2-2a1 1 0 0 1 1.414-1.414L9 10.586l3.293-3.293a1 1 0 0 1 1.414 1.414Z"/>
+                                        </svg>
+                                        <span class="text-base font-normal leading-tight text-white dark:text-gray-400">{{\Illuminate\Support\Str::upper($chukker->chukker_no)}}</span>
+                                    </li>
+                                    <li class="flex space-x-3 items-center">
+                                        <svg class="flex-shrink-0 w-4 h-4 text-black" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="currentColor" viewBox="0 0 20 20">
+                                            <path d="M10 .5a9.5 9.5 0 1 0 9.5 9.5A9.51 9.51 0 0 0 10 .5Zm3.707 8.207-4 4a1 1 0 0 1-1.414 0l-2-2a1 1 0 0 1 1.414-1.414L9 10.586l3.293-3.293a1 1 0 0 1 1.414 1.414Z"/>
+                                        </svg>
+                                        <span class="text-base font-normal leading-tight text-white dark:text-gray-400">{{Carbon\Carbon::parse($chukker->chukker_date)->format('l d F Y')}}</span>
+                                    </li>
+                                </ul>
+                                @if($chukker->status == 'open')
+                                    @if($booking == null)
+                                        <button type="button" onclick="modalHandler(true)" class="text-white w-full bg-green-900 hover:bg-red-700 focus:ring-4 focus:outline-none focus:ring-blue-200 font-large rounded-lg text-lg mt-5 px-5 py-2 justify-center  text-center">Book Now</button>
+                                    @else
+                                        <livewire:cancel-booking :booking="$booking" />
+                                        {{--                                    <button type="button" wire:click="cancelBooking({{$booking->id}})" class="text-white w-full bg-red-900 hover:bg-red-700 focus:ring-4 focus:outline-none focus:ring-blue-200 font-large rounded-lg text-lg mt-5 px-5 py-2 justify-center  text-center">Cancel</button>--}}
+                                    @endif
+                                    <span class="ml-1 text-xl font-normal text-white">
                                     <div class="wrap-countdown mercado-countdown" data-expire="{{ Carbon\Carbon::parse($chukker->closing_time)->format('Y/m/d H:i:s') }}"></div>
                                 </span>
-                            @else
-                                @if($booking != null)
-                                    <button type="button" disabled class="text-white w-full bg-{{$booking->status == 'confirmed' ? 'green' : 'yellow'}}-500 focus:ring-4 focus:outline-none focus:ring-blue-200 font-large rounded-lg text-lg mt-5 px-5 py-2 justify-center  text-center">{{\Illuminate\Support\Str::upper($booking->status)}}</button>
+                                @else
+                                    @if($booking != null)
+                                        <button type="button" disabled class="text-white w-full bg-{{$booking->status == 'confirmed' ? 'green' : 'yellow'}}-500 focus:ring-4 focus:outline-none focus:ring-blue-200 font-large rounded-lg text-lg mt-5 px-5 py-2 justify-center  text-center">{{\Illuminate\Support\Str::upper($booking->status)}}</button>
+                                    @endif
                                 @endif
-                            @endif
+                            </div>
                         </div>
-                    </div>
+                    @endif
+
+
 
 
                     <div class="my-4"></div>

@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Models\Chukker;
 use App\Models\ChukkerBooking;
+use App\Models\Invoice;
 use App\Models\Membership;
 use App\Models\Pitch;
 use App\Models\Post;
@@ -28,6 +29,8 @@ class DashboardController extends Controller
                 ->where('membership_id','=',Auth::user()->membership->id)
                 ->first(),
             'notices' => Post::all()->sortByDesc('id')->take(3),
+            'invoices' => Invoice::query()->where('status','=','unpaid'),
+            'penalties' => Invoice::query()->where('status','!=','served'),
         ]);
     }
 

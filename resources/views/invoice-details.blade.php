@@ -35,7 +35,7 @@
                                     <div class="px-8 py-2 mt-8 text-3xl font-bold {{$invoice->status == "paid" ? 'text-green-700 border-4 border-green-700' : 'text-red-700 border-4 border-red-700'}} border-dotted md:absolute md:right-0 md:top-0 md:mr-12 lg:absolute lg:right-0 lg:top-0 xl:absolute xl:right-0 xl:top-0 print:absolute print:right-0 print:top-0 lg:mr-20 xl:mr-20 print:mr-2 print:mt-8">
                                         {{\Illuminate\Support\Str::upper($invoice->status)}}</div>
                                     @if($invoice->status == "unpaid")
-                                        <form id="paymentForm" method="POST" action="{{ route('pay') }}" accept-charset="UTF-8" class="" role="form">
+                                        <form id="paymentForms" method="POST" action="{{ route('pay') }}" accept-charset="UTF-8" class="" role="form">
                                             <input type="hidden" name="metadata" value="{{ json_encode($array = ['invoiceId' => $invoice->id,'invnum'=>$invoice->inv_number]) }}" >
                                             <input type="hidden" name="email" value="{{Auth::user()->email}}"> {{-- required --}}
                                             <input type="hidden" name="orderID" value="{{$invoice->inv_number}}">
@@ -152,6 +152,7 @@
                 callback: function(response){
                     let message = 'Payment complete! Reference: ' + response.reference;
                     alert(message);
+                    // window.location = "http://www.yoururl.com/verify_transaction.php?reference=" + response.reference;
                 }
             });
 

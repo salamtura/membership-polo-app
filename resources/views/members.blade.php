@@ -12,7 +12,7 @@
                     <div class="w-full max-w-sm bg-white border border-gray-200 rounded-lg shadow dark:bg-gray-800 dark:border-gray-700">
                         <div class="flex flex-col items-center py-5">
                             <img class="w-24 h-24 mb-3 rounded-full shadow-lg" src="{{ $member->profile_photo != null ?  'storage/'.$member->profile_photo : 'images/profile.png'}}" alt="Bonnie image"/>
-                            <h5 class="mb-1 text-xl font-medium text-gray-900 dark:text-white">{{$member->user->name}}</h5>
+                            <h5 class="mb-1 text-l font-medium text-gray-900 dark:text-white">{{$member->user->name}}</h5>
                             <span class="text-sm text-gray-500 dark:text-gray-400">Player Handicap {{$member->player_handicap}}</span>
                         </div>
                     </div>
