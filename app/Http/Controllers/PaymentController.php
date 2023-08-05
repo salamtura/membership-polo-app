@@ -37,7 +37,7 @@ class PaymentController extends Controller
 
         $id = Auth::id();
         // Getting the specific student and his details
-        $invoice = Invoice::where('inv_number',$id)->first();
+
         $inv_id = $paymentDetails['data']['metadata']['invoiceId'];// Getting InvoiceId I passed from the form
         $invnum = $paymentDetails['data']['metadata']['invnum'];
         $status = $paymentDetails['data']['status']; // Getting the status of the transaction
@@ -57,7 +57,7 @@ class PaymentController extends Controller
         ]); // Storing the payment in the database
 
         if($status == "success"){ //Checking to Ensure the transaction was succesful
-
+            $invoice = Invoice::query()->where('id','=',$inv_id)->first();
 //            $invoice->update(['pay_ref' => $number,'status' => 'paid']);
             $invoice->payment_ref = $payRef;
             $invoice->payment_mode = 'online';
