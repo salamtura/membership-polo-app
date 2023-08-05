@@ -1,6 +1,7 @@
 <?php
 
 use App\Http\Controllers\Auth\GetAccessController;
+use App\Http\Controllers\PaymentController;
 use App\Http\Controllers\ProfileController;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Route;
@@ -64,8 +65,8 @@ Route::get('wizard', [ 'middleware' => 'wizard', function () {
 }]);
 
 // Laravel 8 & 9
-Route::post('/pay', [App\Http\Controllers\PaymentController::class, 'redirectToGateway'])->name('pay');
+Route::post('/pay', [PaymentController::class, 'redirectToGateway'])->name('pay');
 
-Route::get('/payment/callback', 'PaymentController@handleGatewayCallback');
+Route::get('/payment/callback', [PaymentController::class,'handleGatewayCallback']);
 
 require __DIR__.'/auth.php';
