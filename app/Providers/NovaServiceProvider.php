@@ -3,6 +3,7 @@
 namespace App\Providers;
 
 use App\Mail\SendInvoice;
+use App\Nova\Payment;
 use App\Nova\PlayerHandicap;
 use App\Nova\PostCategory;
 use App\Nova\Chukker;
@@ -82,6 +83,8 @@ class NovaServiceProvider extends NovaApplicationServiceProvider
                 MenuSection::make(' Club Charges', [
                     MenuItem::resource(Invoice::class)
                         ->name('Invoices'),
+                    MenuItem::resource(Payment::class)
+                        ->name('Payments'),
                     MenuItem::resource(MembershipCategory::class)
                         ->name('Membership Charges'),
                     MenuItem::resource(SubscriptionCategory::class)
