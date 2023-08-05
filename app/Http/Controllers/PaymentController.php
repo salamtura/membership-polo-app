@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Models\Invoice;
 use App\Models\Payment;
+use Carbon\Carbon;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Redirect;
@@ -58,7 +59,9 @@ class PaymentController extends Controller
         if($status == "success"){ //Checking to Ensure the transaction was succesful
 
 //            $invoice->update(['pay_ref' => $number,'status' => 'paid']);
-            $invoice->pay_ref = $payRef;
+            $invoice->payment_ref = $payRef;
+            $invoice->payment_mode = 'online';
+            $invoice->payment_date = Carbon::now();
             $invoice->status = 'paid';
             $invoice->save();
 
