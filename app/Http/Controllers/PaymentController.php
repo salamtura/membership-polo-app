@@ -54,7 +54,7 @@ class PaymentController extends Controller
         if($status == "success"){ //Checking to Ensure the transaction was succesful
 
 //            $invoice->update(['pay_ref' => $number,'status' => 'paid']);
-            $invoice->pay_ref = $number;
+            $invoice->pay_ref = $payRef;
             $invoice->status = 'paid';
             $invoice->save();
 
