@@ -32,7 +32,7 @@ class PaymentController extends Controller
     {
         $paymentDetails = Paystack::getPaymentData();
 
-//        dd($paymentDetails);
+        dd($paymentDetails);
 
         $id = Auth::id();
         // Getting the specific student and his details
