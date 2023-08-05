@@ -21,5 +21,6 @@ class Payment extends Model
         'pay_ref',
         'status',
         'user_id',
+        'fee',
     ];
 }

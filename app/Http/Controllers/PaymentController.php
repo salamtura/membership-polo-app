@@ -32,7 +32,7 @@ class PaymentController extends Controller
     {
         $paymentDetails = Paystack::getPaymentData();
 
-        dd($paymentDetails);
+//        dd($paymentDetails);
 
         $id = Auth::id();
         // Getting the specific student and his details
@@ -41,16 +41,18 @@ class PaymentController extends Controller
         $invnum = $paymentDetails['data']['metadata']['invnum'];
         $status = $paymentDetails['data']['status']; // Getting the status of the transaction
         $amount = $paymentDetails['data']['amount']; //Getting the Amount
-        $payRef = $paymentDetails['data']['ref'];
+        $payRef = $paymentDetails['data']['reference'];
+        $fee = $paymentDetails['data']['fee'];
         $number = $randnum = rand(1111111111,9999999999);// this one is specific to application
         $number = 'year'.$number;
 
         Payment::create(['invoice_id'=>$inv_id,
             'invoice_num'=> $invnum,
-            'amount'=> $amount,
+            'amount'=> $amount/100,
             'status'=> $status,
             'user_id'=> $id,
             'pay_ref'=> $payRef,
+            'fee' => $fee/100
         ]); // Storing the payment in the database
 
         if($status == "success"){ //Checking to Ensure the transaction was succesful
