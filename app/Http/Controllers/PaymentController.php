@@ -64,10 +64,12 @@ class PaymentController extends Controller
             $invoice->payment_date = Carbon::now();
             $invoice->status = 'paid';
             $invoice->save();
-
+//
         }
 
-        return view('invoices');
+        return view('invoices',[
+            'user' => Auth::user(),
+        ]);
         // Now you have the payment details,
         // you can store the authorization_code in your db to allow for recurrent subscriptions
         // you can then redirect or do whatever you want
