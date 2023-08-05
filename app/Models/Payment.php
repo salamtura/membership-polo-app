@@ -8,4 +8,18 @@ use Illuminate\Database\Eloquent\Model;
 class Payment extends Model
 {
     use HasFactory;
+
+    /**
+     * The attributes that are mass assignable.
+     *
+     * @var array<int, string>
+     */
+    protected $fillable = [
+        'invoice_id',
+        'invoice_num',
+        'amount',
+        'pay_ref',
+        'status',
+        'user_id',
+    ];
 }
