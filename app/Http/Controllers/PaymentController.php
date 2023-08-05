@@ -58,7 +58,6 @@ class PaymentController extends Controller
 
         if($status == "success"){ //Checking to Ensure the transaction was succesful
             $invoice = Invoice::query()->where('id','=',$inv_id)->first();
-//            $invoice->update(['pay_ref' => $number,'status' => 'paid']);
             $invoice->payment_ref = $payRef;
             $invoice->payment_mode = 'online';
             $invoice->payment_date = Carbon::now();

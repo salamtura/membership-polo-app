@@ -56,4 +56,8 @@ class Invoice extends Model
     public function penalty(){
         return $this->belongsTo(Penalty::class);
     }
+
+    public function payment(){
+        return $this->hasMany(Payment::class);
+    }
 }

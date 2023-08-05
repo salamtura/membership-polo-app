@@ -78,6 +78,7 @@ function getPermissions(){
         \App\Models\PostCategory::class,
         \App\Models\Document::class,
         \App\Models\DocumentCategory::class,
+        \App\Models\Payment::class,
     ]);
 
     $perm = [];
