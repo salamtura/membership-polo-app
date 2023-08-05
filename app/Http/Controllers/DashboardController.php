@@ -6,6 +6,7 @@ use App\Models\Chukker;
 use App\Models\ChukkerBooking;
 use App\Models\Invoice;
 use App\Models\Membership;
+use App\Models\Penalty;
 use App\Models\Pitch;
 use App\Models\Post;
 use Illuminate\Http\Request;
@@ -30,7 +31,7 @@ class DashboardController extends Controller
                 ->first(),
             'notices' => Post::all()->sortByDesc('id')->take(3),
             'invoices' => Invoice::query()->where('status','=','unpaid'),
-            'penalties' => Invoice::query()->where('status','!=','served'),
+            'penalties' => Penalty::query()->where('status','!=','served'),
         ]);
     }
 
