@@ -32,7 +32,7 @@ class PaymentController extends Controller
     {
         $paymentDetails = Paystack::getPaymentData();
 
-        dd($paymentDetails);
+//        dd($paymentDetails);
 
         $id = Auth::id();
         // Getting the specific student and his details
@@ -42,7 +42,7 @@ class PaymentController extends Controller
         $status = $paymentDetails['data']['status']; // Getting the status of the transaction
         $amount = $paymentDetails['data']['amount']; //Getting the Amount
         $payRef = $paymentDetails['data']['reference'];
-        $fee = $paymentDetails['data']['fee'];
+        $fee = $paymentDetails['data']['fees'];
         $number = $randnum = rand(1111111111,9999999999);// this one is specific to application
         $number = 'year'.$number;
 
