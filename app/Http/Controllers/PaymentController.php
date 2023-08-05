@@ -34,7 +34,7 @@ class PaymentController extends Controller
 
         $id = Auth::id();
         // Getting the specific student and his details
-        $invoice = Invoice::where('invoice_num',$id)->first();
+        $invoice = Invoice::where('inv_number',$id)->first();
         $inv_id = $paymentDetails['data']['metadata']['invoiceId'];// Getting InvoiceId I passed from the form
         $invnum = $paymentDetails['data']['metadata']['invnum'];
         $status = $paymentDetails['data']['status']; // Getting the status of the transaction
