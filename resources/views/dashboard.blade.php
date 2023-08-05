@@ -189,7 +189,7 @@
                                     <span class="tracking-wide">Invoices</span>
                                 </div>
                                 <div class="text-center">
-                                    <div class="text-teal-600 text-xl font-bold">{{$user->membership->invoices->count()}}</div>
+                                    <div class="text-teal-600 text-xl font-bold">{{$invoices->count()}}</div>
                                     <div class="text-gray-500 text-xs">Unpaid</div>
                                 </div>
                             </div>
@@ -218,7 +218,7 @@
                                     <span class="tracking-wide">Penalties</span>
                                 </div>
                                 <div class="text-center">
-                                    <div class="text-teal-600 text-xl font-bold">{{$user->membership->penalties->count()}}</div>
+                                    <div class="text-teal-600 text-xl font-bold">{{$penalties->count()}}</div>
                                     <div class="text-gray-500 text-xs">Pending</div>
                                 </div>
                             </div>

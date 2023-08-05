@@ -32,7 +32,7 @@
                                         <td class="py-4 px-6 text-sm font-medium text-gray-900 whitespace-nowrap">{{'₦'.number_format($invoice->total_amount, 2)}}</td>
                                         <td class="py-4 px-6 text-sm font-medium text-gray-900 whitespace-nowrap">{{date('d M Y', strtotime($invoice->invoice_date))}}</td>
                                         <td class="py-4 px-6 text-sm font-medium text-gray-900 whitespace-nowrap">{{date('d M Y', strtotime($invoice->invoice_due_date))}}</td>
-                                        <td class="py-4 px-6 text-sm font-medium text-gray-900 whitespace-nowrap"><span class="{{$invoice->status == 'active' ? 'bg-green-500' : 'bg-red-500'}} py-1 px-2 rounded text-white text-sm">{{$invoice->status}}</span></td>
+                                        <td class="py-4 px-6 text-sm font-medium text-gray-900 whitespace-nowrap"><span class="{{$invoice->status == 'paid' ? 'bg-green-500' : 'bg-red-500'}} py-1 px-2 rounded text-white text-sm">{{$invoice->status}}</span></td>
                                         <td class="py-4 px-6 ">
                                             <a href="/invoice-details/{{$invoice->id}}" >view invoice</a>
                                         </td>
