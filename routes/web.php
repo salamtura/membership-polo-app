@@ -30,8 +30,25 @@ Route::middleware(['auth','member','verified'])->group(function () {
             return view('invoice-details',
                 ['invoice' => \App\Models\Invoice::query()->where('id','=',$id)->first()] );
         }
-    ])
-        ->name('invoice-details');
+    ])->name('invoice-details');
+    Route::get('/subscriptions', [
+        function () {
+            return view('subscriptions',
+                ['user'=> Auth::user()] );
+        }
+    ])->name('subscriptions');
+    Route::get('/penalties', [
+        function () {
+            return view('penalties',
+                ['user'=> Auth::user()] );
+        }
+    ])->name('penalties');
+    Route::get('/chukkers', [
+        function () {
+            return view('chukkers',
+                ['user'=> Auth::user()] );
+        }
+    ])->name('chukkers');
     Route::get('/docs', [\App\Http\Controllers\DocumentController::class, 'index'])
         ->name('docs');
     Route::get('/fees', [\App\Http\Controllers\FeeController::class, 'index'])
@@ -40,14 +57,15 @@ Route::middleware(['auth','member','verified'])->group(function () {
         ->name('notice-board');
     Route::get('/members', [\App\Http\Controllers\MembersController::class, 'index'])
         ->name('members');
-
     Route::get('/profile-details', [
         function () {
             return view('profile',
                 ['user' => Auth::user()] );
         }
-    ])
-        ->name('profile-details');
+    ])->name('profile-details');
+    Route::post('/pay', [PaymentController::class, 'redirectToGateway'])
+        ->name('pay');
+    Route::get('/payment/callback', [PaymentController::class,'handleGatewayCallback']);
 });
 
 Route::middleware(['auth', 'member'])->group(function () {
@@ -63,10 +81,5 @@ Route::get('getaccess', [GetAccessController::class, 'create'])
 Route::get('wizard', [ 'middleware' => 'wizard', function () {
     return view('default');
 }]);
-
-// Laravel 8 & 9
-Route::post('/pay', [PaymentController::class, 'redirectToGateway'])->name('pay');
-
-Route::get('/payment/callback', [PaymentController::class,'handleGatewayCallback']);
 
 require __DIR__.'/auth.php';

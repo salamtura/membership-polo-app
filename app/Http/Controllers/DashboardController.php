@@ -30,8 +30,12 @@ class DashboardController extends Controller
                 ->where('membership_id','=',Auth::user()->membership->id)
                 ->first(),
             'notices' => Post::all()->sortByDesc('id')->take(3),
-            'invoices' => Invoice::query()->where('status','=','unpaid'),
-            'penalties' => Penalty::query()->where('status','!=','served'),
+            'invoices' => Invoice::query()
+                ->where('status','=','unpaid')
+                ->where('membership_id','=',Auth::user()->membership->id),
+            'penalties' => Penalty::query()
+                ->where('status','!=','served')
+                ->where('membership_id','=',Auth::user()->membership->id),
         ]);
     }
 
