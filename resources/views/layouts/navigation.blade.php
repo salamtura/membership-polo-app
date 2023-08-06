@@ -1,4 +1,4 @@
-<nav x-data="{ open: false }" class="bg-white dark:bg-gray-800 border-b border-gray-100 dark:border-gray-700">
+<nav x-data="{ open: false }" class="bg-white border-b border-gray-100 ">
     <!-- Primary Navigation Menu -->
     <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         <div class="flex justify-between h-16">
@@ -16,28 +16,18 @@
                     <x-nav-link :href="route('dashboard')" :active="request()->routeIs('dashboard')">
                         {{ __('Dashboard') }}
                     </x-nav-link>
-                </div>
-                <div class="hidden space-x-8 sm:-my-px sm:ml-10 sm:flex">
                     <x-nav-link :href="route('invoices')" :active="request()->routeIs('invoices')">
                         {{ __('Invoices') }}
                     </x-nav-link>
-                </div>
-                <div class="hidden space-x-8 sm:-my-px sm:ml-10 sm:flex">
                     <x-nav-link :href="route('fees')" :active="request()->routeIs('fees')">
                         {{ __('Club Fees') }}
                     </x-nav-link>
-                </div>
-                <div class="hidden space-x-8 sm:-my-px sm:ml-10 sm:flex">
                     <x-nav-link :href="route('members')" :active="request()->routeIs('members')">
                         {{ __('Club Members') }}
                     </x-nav-link>
-                </div>
-                <div class="hidden space-x-8 sm:-my-px sm:ml-10 sm:flex">
                     <x-nav-link :href="route('notice-board')" :active="request()->routeIs('notice-board')">
                         {{ __('Notice Board') }}
                     </x-nav-link>
-                </div>
-                <div class="hidden space-x-8 sm:-my-px sm:ml-10 sm:flex">
                     <x-nav-link :href="route('docs')" :active="request()->routeIs('docs')">
                         {{ __('Document Center') }}
                     </x-nav-link>
@@ -95,6 +85,21 @@
         <div class="pt-2 pb-3 space-y-1">
             <x-responsive-nav-link :href="route('dashboard')" :active="request()->routeIs('dashboard')">
                 {{ __('Dashboard') }}
+            </x-responsive-nav-link>
+            <x-responsive-nav-link :href="route('invoices')" :active="request()->routeIs('invoices')">
+                {{ __('Invoices') }}
+            </x-responsive-nav-link>
+            <x-responsive-nav-link :href="route('fees')" :active="request()->routeIs('fees')">
+                {{ __('Club Fees') }}
+            </x-responsive-nav-link>
+            <x-responsive-nav-link :href="route('members')" :active="request()->routeIs('members')">
+                {{ __('Club Members') }}
+            </x-responsive-nav-link>
+            <x-responsive-nav-link :href="route('notice-board')" :active="request()->routeIs('notice-board')">
+                {{ __('Notice Board') }}
+            </x-responsive-nav-link>
+            <x-responsive-nav-link :href="route('docs')" :active="request()->routeIs('docs')">
+                {{ __('Document Center') }}
             </x-responsive-nav-link>
         </div>
 
