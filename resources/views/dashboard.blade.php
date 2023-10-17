@@ -103,7 +103,7 @@
                         </div>
                     @else
                         <div class=" grid md:grid-cols-2 sm:grid-cols-1">
-                            @if( \Carbon\Carbon::now()->greaterThan($pitch->to_date) )
+                            @if( \Carbon\Carbon::now()->greaterThan($pitch->to_date))
                                 @php $pitch->status = 'closed'; @endphp
                             @endif
                             <div class="w-full max-w-md p-4 {{$pitch->status =='open' ? 'bg-green-500' : 'bg-red-500'}} border border-gray-200 rounded-lg shadow sm:p-8">

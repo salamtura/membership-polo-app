@@ -36,6 +36,13 @@
             <form class="needs-validation" novalidate>
                 <div class="row">
                     <div class="col-md-4 mb-3">
+                        <label for="taskSurname">Profile photo:</label>
+                        <input type="file" wire:model="photo">
+                        @error('photo') <span class="invalid-feedback" style="display: block">{{ $message }}</span> @enderror
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-md-4 mb-3">
                         <label for="taskSurname">Surname:</label>
                         <input type="text" wire:model="surname" class="form-control" id="taskSurname">
                         @error('surname') <span class="invalid-feedback" style="display: block">{{ $message }}</span> @enderror
@@ -133,6 +140,7 @@
             <div class="">
                 <h3> Employment Details</h3>
                 <form class="needs-validation" novalidate>
+
                 <div class="row">
                     <div class="col-md-4 mb-3">
                         <label for="title">Occupation:</label>

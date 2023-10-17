@@ -2,6 +2,7 @@
 
 use App\Http\Controllers\Auth\GetAccessController;
 use App\Http\Controllers\PaymentController;
+use App\Http\Controllers\PitchController;
 use App\Http\Controllers\ProfileController;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Route;
@@ -66,6 +67,13 @@ Route::middleware(['auth','member','verified'])->group(function () {
     Route::post('/pay', [PaymentController::class, 'redirectToGateway'])
         ->name('pay');
     Route::get('/payment/callback', [PaymentController::class,'handleGatewayCallback']);
+
+
+    Route::controller(PitchController::class)->group(function(){
+        Route::get('pitch-calendar', 'index');
+        Route::post('fullcalenderAjax', 'ajax');
+
+    });
 });
 
 Route::middleware(['auth', 'member'])->group(function () {

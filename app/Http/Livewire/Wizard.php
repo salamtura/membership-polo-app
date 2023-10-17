@@ -2,6 +2,7 @@
 
 namespace App\Http\Livewire;
 
+
 use App\Models\Membership;
 use App\Models\MemberAccess;
 use App\Models\MembershipCategory;
@@ -9,11 +10,16 @@ use App\Models\Occupation;
 use App\Models\Profession;
 use Illuminate\Support\Facades\Auth;
 use Livewire\Component;
+use Livewire\WithFileUploads;
+use Livewire\Attributes\Rule;
 use function PHPUnit\Framework\isEmpty;
 
 class Wizard extends Component
 {
+    use WithFileUploads;
     public $currentStep = 1;
+    #[Rule('image|max:1024')] // 1MB Max
+    public $photo;
     public $surname, $first_name,$middle_name,$email,$mobile,$alt_mobile,$address,$date_of_birth,
             $gender, $nationality,$occupation,$profession,$name_of_organization,$type_of_organization,
         $category, $area_of_interest, $other_membership, $other_club, $involved_in_polo, $horse_owner,
@@ -76,6 +82,7 @@ class Wizard extends Component
             'nationality' => 'required',
             'blood_group' => 'required',
             'genotype' => 'required',
+            'photo' => 'required|image|max:2048'
         ]);
 
         $this->currentStep = 2;
@@ -134,6 +141,10 @@ class Wizard extends Component
             'emergency_contact_relationship' => 'required',
         ]);
 
+        $name = md5($this->photo . microtime()).'.'.$this->photo->extension();
+
+        $this->photo->storeAs('public', $name);
+
 
         Membership::create([
             'user_id' => Auth::id(),
@@ -164,6 +175,7 @@ class Wizard extends Component
             'emergency_contact_name' => $this->emergency_contact_name,
             'emergency_contact_mobile' => $this->emergency_contact_mobile,
             'emergency_contact_relationship' => $this->emergency_contact_relationship,
+            'profile_photo' => $name,
 
         ]);
 

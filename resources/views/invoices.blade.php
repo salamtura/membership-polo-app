@@ -9,9 +9,9 @@
             <div class="max-w-7xl mx-auto sm:px-6 lg:px-8">
                 <div class="bg-white overflow-hidden shadow-sm sm:rounded-lg">
                     <div class="p-6 text-gray-900 ">
-
-                        <table class="min-w-full divide-y divide-gray-200 table-fixed">
-                            <thead class="bg-gray-100 border-b-2">
+                        @if($user->membership->invoices->count() > 0)
+                            <table class="min-w-full divide-y divide-gray-200 table-fixed">
+                                <thead class="bg-gray-100 border-b-2">
                                 <tr>
                                     <th scope="col" class="py-3 px-6 text-xs font-medium tracking-wider text-left text-gray-700 uppercase">Invoice No</th>
                                     <th scope="col" class="py-3 px-6 text-xs font-medium tracking-wider text-left text-gray-700 uppercase">Description</th>
@@ -22,8 +22,8 @@
                                     <th scope="col" class="py-3 px-6 text-xs font-medium tracking-wider text-left text-gray-700 uppercase">Status</th>
                                     <th scope="col" class="py-3 px-6 text-xs font-medium tracking-wider text-left text-gray-700 uppercase">Action</th>
                                 </tr>
-                            </thead>
-                            <tbody>
+                                </thead>
+                                <tbody>
                                 @foreach($user->membership->invoices as $invoice)
                                     <tr class="hover:bg-gray-100 border-b">
                                         <td class="py-4 px-6 text-sm font-medium text-gray-900 whitespace-nowrap">{{$invoice->inv_number}}</td>
@@ -38,8 +38,12 @@
                                         </td>
                                     </tr>
                                 @endforeach
-                            </tbody>
-                        </table>
+                                </tbody>
+                            </table>
+                        @else
+                            <h3>You have no invoices</h3>
+                        @endif
+
                     </div>
                 </div>
             </div>
