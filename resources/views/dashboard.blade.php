@@ -264,7 +264,9 @@
                                     <ul class="list-inside space-y-2">
                                         @foreach($notices as $notice)
                                             <li>
-                                                <div class="text-teal-600">{{$notice->title}}</div>
+                                                <div class="text-teal-600">
+                                                    <a href="/post-details/{{$notice->id}}">{{$notice->title}}</a>
+                                                </div>
                                                 <div class="text-gray-500 text-xs">{{$notice->created_at}}</div>
                                             </li>
                                         @endforeach

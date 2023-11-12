@@ -56,6 +56,12 @@ Route::middleware(['auth','member','verified'])->group(function () {
         ->name('fees');
     Route::get('/notice-board', [\App\Http\Controllers\PostController::class, 'index'])
         ->name('notice-board');
+    Route::get('/post-details/{id}', [
+        function ($id) {
+            return view('post-details',
+                ['post' => \App\Models\Post::query()->where('id','=',$id)->first()] );
+        }
+    ])->name('post-details');
     Route::get('/members', [\App\Http\Controllers\MembersController::class, 'index'])
         ->name('members');
     Route::get('/profile-details', [

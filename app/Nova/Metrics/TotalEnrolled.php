@@ -2,12 +2,12 @@
 
 namespace App\Nova\Metrics;
 
-use App\Models\Membership;
+use App\Models\MemberAccess;
 use Laravel\Nova\Http\Requests\NovaRequest;
 use Laravel\Nova\Metrics\Value;
 use Laravel\Nova\Nova;
 
-class TotalMembers extends Value
+class TotalEnrolled extends Value
 {
     /**
      * Calculate the value of the metric.
@@ -17,7 +17,7 @@ class TotalMembers extends Value
      */
     public function calculate(NovaRequest $request)
     {
-        $model = Membership::class;
+        $model = MemberAccess::query()->where('status','=','ENROLLED');
         return $this->count($request, $model);
     }
 
@@ -29,7 +29,6 @@ class TotalMembers extends Value
     public function ranges()
     {
         return [
-
         ];
     }
 

@@ -33,6 +33,7 @@ class DashboardController extends Controller
             ->where('from_date','<=',$today)
             ->where('to_date','>=',$today)
             ->first();
+
         if ($pitch == null){
             $pitch = Pitch::query()
                 ->orderByDesc('id')
