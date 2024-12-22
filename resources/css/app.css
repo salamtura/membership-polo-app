@@ -1,3 +1,88 @@
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
+
+body {
+    position: relative;
+}
+
+.header-background-shape-rect {
+    position: absolute;
+    background-color: #394911;
+    height: 120px;
+    width: 100%;
+    left: 0;
+    top: 0;
+}
+
+.header-background-shape-rounded {
+    position: absolute;
+    background-color: #394911;
+    height: 300px;
+    width: 100%;
+    left: 0;
+    top: 0;
+    border-radius: 40%;
+}
+
+.main-user-pic {
+    background-size: 100% 100%;
+    background-position: center;
+    width: 40px;
+    height: 40px;
+    border-radius: 50%;
+    background-color: white;
+    margin-right: -10px;
+}
+
+.main-user-pic-70 {
+    background-size: 100% 100%;
+    background-position: center;
+    width: 70px;
+    height: 70px;
+    border-radius: 50%;
+    background-color: white;
+    margin-right: -10px;
+}
+
+.pill-success {
+    color: #82A727; background-color: #E2F1BF; border-radius: 100px; padding: 5px 15px; justify-self: start;
+}
+
+.pill-success-inverted {
+    color: #93BC2C; background-color: #495E16; border-radius: 100px; padding: 5px 15px
+}
+
+.pill-danger {
+    color: #C02930;
+    background-color: #F9EAEA;
+    border-radius: 100px;
+    padding: 5px 15px;
+}
+
+.pill-grey {
+    color: #374140; background-color: #EBECEC; border-radius: 100px; padding: 5px 15px;
+}
+
+.common-card {
+    border: 1px solid #EBECEC;
+    padding: 20px;
+    border-radius: 16px;
+    background-color: white;
+}
+
+.profile-card {
+    background-color: #F7F8F8;
+}
+
+.profile-card h1 {
+    font-size: 18px;
+    font-weight: 600
+}
+
+.update-profile-btn {
+    background-color: #93BC2C;
+    color: white;
+    padding: 6px 16px;
+    border-radius: 2px;
+}
