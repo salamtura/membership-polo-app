@@ -41,12 +41,14 @@
                 'description' => 'For Sticks and Ball Only',
                 'status' => 'open',
                 'date' => 'Opens Monday - Sunday +GMT',
+                'icon' => '/images/icons/pitch.svg',
             ],
             [
                 'title' => 'Chukker Booking',
                 'description' => 'Chukker 0003',
                 'status' => 'closed',
                 'date' => 'Friday November 11, 2024',
+                'icon' => '/images/icons/users.svg',
             ],
         ];
     @endphp
@@ -73,7 +75,8 @@
 
                 </div>
                 @foreach ($cards as $card)
-                    <x-status-card :title="$card['title']" :description="$card['description']" :status="$card['status']" :date="$card['date']" />
+                    <x-status-card :title="$card['title']" :description="$card['description']" :status="$card['status']" :date="$card['date']"
+                        :icon="$card['icon']" />
                 @endforeach
             </div>
 
