@@ -34,7 +34,22 @@
     </style>
     <link href="https://unpkg.com/tailwindcss@^1.0/dist/tailwind.min.css" rel="stylesheet">
     <script src="https://cdn.jsdelivr.net/gh/alpinejs/alpine@v2.x.x/dist/alpine.min.js" defer></script>
-
+    @php
+        $cards = [
+            [
+                'title' => 'Polo Pitch',
+                'description' => 'For Sticks and Ball Only',
+                'status' => 'open',
+                'date' => 'Opens Monday - Sunday +GMT',
+            ],
+            [
+                'title' => 'Chukker Booking',
+                'description' => 'Chukker 0003',
+                'status' => 'closed',
+                'date' => 'Friday November 11, 2024',
+            ],
+        ];
+    @endphp
     <div class='header-background-shape-rect'></div>
     <div class='header-background-shape-rounded'></div>
     <div class="">
@@ -55,8 +70,15 @@
                     <div class="flex justify-center md:self-start"><button class="update-profile-btn ">Update
                             Profile</button>
                     </div>
+
                 </div>
+                @foreach ($cards as $card)
+                    <x-status-card :title="$card['title']" :description="$card['description']" :status="$card['status']" :date="$card['date']" />
+                @endforeach
             </div>
+
+
+
         </div>
         <div class="container mx-auto p-5 relative hidden">
 

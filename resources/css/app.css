@@ -46,11 +46,11 @@ body {
 }
 
 .pill-success {
-    color: #82A727; background-color: #E2F1BF; border-radius: 100px; padding: 5px 15px; justify-self: start;
+    color: #82A727; background-color: #E2F1BF; border-radius: 100px; padding: 5px 15px; justify-self: start; text-transform: capitalize;
 }
 
 .pill-success-inverted {
-    color: #93BC2C; background-color: #495E16; border-radius: 100px; padding: 5px 15px
+    color: #93BC2C; background-color: #495E16; border-radius: 100px; padding: 5px 15px; text-transform: capitalize;
 }
 
 .pill-danger {
@@ -58,10 +58,11 @@ body {
     background-color: #F9EAEA;
     border-radius: 100px;
     padding: 5px 15px;
+    text-transform: capitalize;
 }
 
 .pill-grey {
-    color: #374140; background-color: #EBECEC; border-radius: 100px; padding: 5px 15px;
+    color: #374140; background-color: #EBECEC; border-radius: 100px; padding: 5px 15px; text-transform: capitalize;
 }
 
 .common-card {

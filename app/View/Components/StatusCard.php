@@ -12,12 +12,18 @@ class StatusCard extends Component
     public $description;
     public $status;
     public $date;
+    public $icon;
     /**
      * Create a new component instance.
      */
-    public function __construct()
+    public function __construct($title, $description = '', $status = '', $date = '', $icon = '')
     {
         //
+        $this->title = $title;
+        $this->description = $description;
+        $this->status = $status;
+        $this->date = $date;
+        $this->icon = $icon;
     }
 
     /**
