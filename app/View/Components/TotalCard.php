@@ -15,7 +15,7 @@ class TotalCard extends Component
     /**
      * Create a new component instance.
      */
-    public function __construct($name = '', $icon = '', $value = '', $status = '')
+    public function __construct($name = '', $icon = '', $value = 0, $status = '')
     {
         //
         $this->name = $name;

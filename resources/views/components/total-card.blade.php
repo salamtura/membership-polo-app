@@ -1,11 +1,9 @@
-<div class="common-card gap-[60px]">
+<div class="common-card flex flex-col gap-[30px]">
     <div class="flex">
         <div class="flex-grow font-[500] text-[16px]">
-            <?php echo htmlspecialchars($title); ?>
+            <?php echo htmlspecialchars($name); ?>
         </div>
-        <div>
-            <?php echo $icon; ?>
-        </div>
+        <img src="{{ $icon }}" />
     </div>
     <div class="flex items-center gap-[15px]">
         <div class="text-[30px] font-[500]">

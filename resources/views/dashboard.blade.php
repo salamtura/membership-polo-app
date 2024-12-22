@@ -52,6 +52,33 @@
                 'icon' => '/images/icons/users.svg',
             ],
         ];
+
+        $total_cards = [
+            [
+                'name' => 'Invoice',
+                'icon' => '/images/icons/invoice.svg',
+                'value' => 0,
+                'status' => 'unpaid',
+            ],
+            [
+                'name' => 'Subscription',
+                'icon' => '/images/icons/subscription.svg',
+                'value' => 0,
+                'status' => 'unpaid',
+            ],
+            [
+                'name' => 'Penalties',
+                'icon' => '/images/icons/penalties.svg',
+                'value' => 0,
+                'status' => 'pending',
+            ],
+            [
+                'name' => 'Chukkers',
+                'icon' => '/images/icons/chukkers.svg',
+                'value' => 0,
+                'status' => 'chukkers played',
+            ],
+        ];
     @endphp
 
     <div class='header-background-shape-rect'></div>
@@ -62,14 +89,21 @@
     </div>
 
     <div class="container mx-auto p-5 relative">
-        <div class="grid grid-cols-1 md:grid-cols-3 gap-4">
-            <x-profile-card :image="$user->membership->profile_photo != null
-                ? 'storage/' . $user->membership->profile_photo
-                : 'images/profile.png'" :name="$user->name" :year="substr($user->membership->created_at, 0, 4)" :status="$user->membership->membership_status" />
-            @foreach ($status_cards as $card)
-                <x-status-card :title="$card['title']" :description="$card['description']" :status="$card['status']" :date="$card['date']"
-                    :icon="$card['icon']" />
-            @endforeach
+        <div class="flex flex-col gap-8">
+            <div class="grid grid-cols-1 md:grid-cols-3 gap-4">
+                <x-profile-card :image="$user->membership->profile_photo != null
+                    ? 'storage/' . $user->membership->profile_photo
+                    : 'images/profile.png'" :name="$user->name" :year="substr($user->membership->created_at, 0, 4)" :status="$user->membership->membership_status" />
+                @foreach ($status_cards as $card)
+                    <x-status-card :title="$card['title']" :description="$card['description']" :status="$card['status']" :date="$card['date']"
+                        :icon="$card['icon']" />
+                @endforeach
+            </div>
+            <div class="grid grid-cols-4 gap-4">
+                @foreach ($total_cards as $card)
+                    <x-total-card :name="$card['name']" :icon="$card['icon']" :value="$card['value']" :status="$card['status']" />
+                @endforeach
+            </div>
         </div>
     </div>
 
