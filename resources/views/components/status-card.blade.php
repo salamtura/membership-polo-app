@@ -14,7 +14,7 @@
         </div>
     </div>
     <div class="flex font-[700] gap-[5px] items-center">
-        <img src="/images/icons/clock.svg" />
+        <img src="/images/icons/stopwatch.svg" />
         <div style="color: <?= $status === 'closed' ? '#561216' : '#394911' ?>">
             <?= htmlspecialchars($date) ?></div>
     </div>

@@ -87,3 +87,7 @@ body {
     padding: 6px 16px;
     border-radius: 2px;
 }
+
+.see-all-card-text {
+    color: #374140; font-size: 12px
+}
