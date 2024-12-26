@@ -138,7 +138,7 @@
         Welcome back {{ $user->membership->first_name }}!
     </div>
 
-    <div class="container mx-auto p-5 relative">
+    <div class="flex justify-center p-5 relative">
         <div class="flex flex-col gap-8">
             <div class="grid grid-cols-1 md:grid-cols-3 gap-4">
                 <x-profile-card :image="$user->membership->profile_photo != null
@@ -149,7 +149,7 @@
                         :icon="$card['icon']" />
                 @endforeach
             </div>
-            <div class="grid grid-cols-4 gap-4">
+            <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4">
                 @foreach ($total_cards as $card)
                     <x-total-card :name="$card['name']" :icon="$card['icon']" :value="$card['value']" :status="$card['status']" />
                 @endforeach
@@ -173,7 +173,8 @@
                         @endforeach
                     </div>
                 </div>
-                <div class="common-card p-[20px] gap-[30px]" style="border: 1px solid #ddd; padding: 20px; gap: 30px">
+                <div class="common-card p-[20px] gap-[30px] overflow-scroll sm:overflow-auto"
+                    style="border: 1px solid #ddd; padding: 20px; gap: 30px">
                     <div>
                         <div style="color: #18181B; font-weight: 700; font-size: 16px">Polo Members</div>
                         <div style="color: #71717A; font-weight: 400; font-size: 14px">See the list of all members of

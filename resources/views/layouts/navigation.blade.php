@@ -89,19 +89,23 @@
     </div>
 
     <!-- New navigation bar code -->
-    <div class="relative z-10 mx-[60px]">
-        <div class="flex items-center">
+    <div class="relative z-10 mx-[30px] lg:mx-[60px] pt-2">
+        <div class="flex items-center flex-wrap gap-4 lg:gap-4">
             <div><img src='/images/club_logo_2.png' height='76px' width='53px' /></div>
-            <div class="flex-grow flex justify-center">
-                <div class="flex gap-[50px] text-white">
+            {{-- <div class="main-user-pic-70 block sm:hidden"
+                style="background-image: url({{ Auth::user()->membership->profile_photo != null ? 'storage/' . Auth::user()->membership->profile_photo : 'images/profile.png' }});">
+            </div> --}}
+            <div class="flex-grow hidden md:flex justify-start ml-10">
+                <div class="flex gap-4 md:gap-[50px]  text-white">
                     <div class='active-nav-item nav-item'>Dashboard</div>
                     <div class='nav-item'>Invoices</div>
                     <div class='nav-item'>Club fees</div>
+                    <div class='nav-item'>Club members</div>
                     <div class='nav-item'>Notice board</div>
                     <div class='nav-item'>Document Centre</div>
                 </div>
             </div>
-            <div class="flex gap-[20px] items-center">
+            <div class="flex gap-[20px] items-center flex-grow justify-end">
                 <div><svg width="24" height="24" viewBox="0 0 24 24" fill="none"
                         xmlns="http://www.w3.org/2000/svg">
                         <path
@@ -110,25 +114,64 @@
                     </svg>
                 </div>
                 <div class="flex gap-[20px] items-center">
-                    <div class="main-user-pic"
+                    <div class="main-user-pic hidden sm:block"
                         style="background-image: url({{ Auth::user()->membership->profile_photo != null ? 'storage/' . Auth::user()->membership->profile_photo : 'images/profile.png' }});">
                     </div>
-                    <div class="flex flex-col gap-[5px]">
-                        <div class="text-white text-[14px]">{{ Auth::user()->name }}</div>
+                    <div class="hidden sm:flex sm:flex-col sm:justify-center gap-1">
+                        <x-dropdown align="right" width="48">
+                            <x-slot name="trigger">
+                                <button
+                                    class="inline-flex items-center border border-transparent text-sm leading-4 font-medium rounded-md text-white dark:text-gray-400 bg-transparent dark:bg-gray-800 hover:text-gray-700 dark:hover:text-gray-300 focus:outline-none transition ease-in-out duration-150">
+                                    <div>{{ Auth::user()->name }}</div>
+
+                                    <div class="ml-1">
+                                        <svg width="24" height="24" viewBox="0 0 24 24" fill="none"
+                                            xmlns="http://www.w3.org/2000/svg">
+                                            <path d="M7 10L12 15L17 10H7Z" fill="white" />
+                                        </svg>
+                                    </div>
+                                </button>
+                            </x-slot>
+
+                            <x-slot name="content">
+                                <x-dropdown-link :href="route('profile.edit')">
+                                    {{ __('Profile') }}
+                                </x-dropdown-link>
+
+                                <!-- Authentication -->
+                                <form method="POST" action="{{ route('logout') }}">
+                                    @csrf
+
+                                    <x-dropdown-link :href="route('logout')"
+                                        onclick="event.preventDefault();
+                                                        this.closest('form').submit();">
+                                        {{ __('Log Out') }}
+                                    </x-dropdown-link>
+                                </form>
+                            </x-slot>
+                        </x-dropdown>
                         <div class="pill-success-inverted self-start text-[12px]">Member</div>
                     </div>
-                </div>
-                <div class="self-start"><svg width="24" height="24" viewBox="0 0 24 24" fill="none"
-                        xmlns="http://www.w3.org/2000/svg">
-                        <path d="M7 10L12 15L17 10H7Z" fill="white" />
-                    </svg>
+                    <div class="-mr-2 flex items-center sm:hidden">
+                        <button @click="open = ! open"
+                            class="inline-flex items-center justify-center p-2 rounded-md text-gray-400 dark:text-gray-500 hover:text-gray-500 dark:hover:text-gray-400 hover:bg-gray-100 dark:hover:bg-gray-900 focus:outline-none focus:bg-gray-100 dark:focus:bg-gray-900 focus:text-gray-500 dark:focus:text-gray-400 transition duration-150 ease-in-out">
+                            <svg class="h-6 w-6" stroke="currentColor" fill="none" viewBox="0 0 24 24">
+                                <path :class="{ 'hidden': open, 'inline-flex': !open }" class="inline-flex"
+                                    stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                                    d="M4 6h16M4 12h16M4 18h16" />
+                                <path :class="{ 'hidden': !open, 'inline-flex': open }" class="hidden"
+                                    stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                                    d="M6 18L18 6M6 6l12 12" />
+                            </svg>
+                        </button>
+                    </div>
                 </div>
             </div>
         </div>
     </div>
 
     <!-- Responsive Navigation Menu -->
-    <div :class="{ 'block': open, 'hidden': !open }" class="hidden sm:hidden">
+    <div :class="{ 'absolute': open, 'hidden': !open }" class="hidden sm:hidden bg-white z-50 w-full top-0">
         <div class="pt-2 pb-3 space-y-1">
             <x-responsive-nav-link :href="route('dashboard')" :active="request()->routeIs('dashboard')">
                 {{ __('Dashboard') }}

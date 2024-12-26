@@ -1,4 +1,4 @@
-<div class="common-card profile-card text-center flex flex-col md:flex-row gap-4">
+<div class="common-card profile-card text-center flex flex-col md:flex-row gap-4 flex-wrap justify-center">
     <div class="flex flex-col items-center gap-2">
         <div class="main-user-pic-70" style="background-image: url({{ $image }});">
         </div>
