@@ -157,7 +157,7 @@
                     <div class="flex items-center mb-5">
                         <div class="flex-grow text-[24px] font-[400]">Notice Board</div>
                         <div class="flex items-center">
-                            <div class="see-all-card-text">See all activities</div>
+                            <div class="see-all-card-text">See All Activities</div>
                             <img src="/images/icons/caret-right.svg" />
                         </div>
                     </div>
@@ -171,18 +171,24 @@
                         @endforeach
                     </div>
                 </div>
-                <div class="common-card p-[20px] gap-[30px] overflow-scroll sm:overflow-auto"
+                <div class="common-card p-[20px] gap-[30px] relative"
                     style="border: 1px solid #ddd; padding: 20px; gap: 30px">
                     <div>
                         <div style="color: #18181B; font-weight: 700; font-size: 16px">Polo Members</div>
                         <div style="color: #71717A; font-weight: 400; font-size: 14px">See the list of all members of
                             the guard polo club</div>
                     </div>
-                    <div class="flex flex-col gap-10 mt-5">
+                    <div class="flex flex-col gap-10 mt-5 overflow-x-scroll sm:overflow-x-auto">
                         @foreach ($member_list as $member)
                             <x-member-list-item :image="$member['image']" :name="$member['name']" :email="$member['email']"
                                 :points="$member['points']" />
                         @endforeach
+                    </div>
+                    <div class="flex justify-end mt-6">
+                        <div class="flex items-center">
+                            <div class="see-all-card-text">See All Members</div>
+                            <img src="/images/icons/caret-right.svg" />
+                        </div>
                     </div>
                 </div>
 

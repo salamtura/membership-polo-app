@@ -129,17 +129,17 @@
                     <div class="main-user-pic hidden sm:block"
                         style="background-image: url({{ Auth::user()->membership->profile_photo != null ? 'storage/' . Auth::user()->membership->profile_photo : 'images/profile.png' }});">
                     </div>
-                    <div class="hidden sm:flex sm:flex-col sm:justify-center gap-1">
+                    <div class="hidden sm:flex sm:flex-col sm:justify-center gap-1 ">
                         <x-dropdown align="right" width="48">
                             <x-slot name="trigger">
                                 <button
-                                    class="inline-flex items-center border border-transparent text-sm leading-4 font-medium rounded-md text-white dark:text-gray-400 bg-transparent dark:bg-gray-800 hover:text-gray-700 dark:hover:text-gray-300 focus:outline-none transition ease-in-out duration-150">
+                                    class="inline-flex items-center border border-transparent text-sm leading-4 font-medium rounded-md dark:text-gray-400 bg-transparent dark:bg-gray-800 dark:hover:text-gray-300 focus:outline-none transition ease-in-out duration-150 fill-white hover:text-gray-400 hover:fill-gray-400 text-white">
                                     <div>{{ Auth::user()->name }}</div>
 
                                     <div class="ml-1">
-                                        <svg width="24" height="24" viewBox="0 0 24 24" fill="none"
+                                        <svg width="24" height="24" viewBox="0 0 24 24"
                                             xmlns="http://www.w3.org/2000/svg">
-                                            <path d="M7 10L12 15L17 10H7Z" fill="white" />
+                                            <path d="M7 10L12 15L17 10H7Z" />
                                         </svg>
                                     </div>
                                 </button>
@@ -147,7 +147,9 @@
 
                             <x-slot name="content">
                                 <x-dropdown-link :href="route('profile.edit')">
-                                    {{ __('Profile') }}
+
+                                    <div class="flex items-center gap-2"> <img src="images/icons/gear.svg" />
+                                        {{ __('Profile') }}</div>
                                 </x-dropdown-link>
 
                                 <!-- Authentication -->
@@ -157,7 +159,8 @@
                                     <x-dropdown-link :href="route('logout')"
                                         onclick="event.preventDefault();
                                                         this.closest('form').submit();">
-                                        {{ __('Log Out') }}
+                                        <div class="flex items-center gap-2"> <img src="images/icons/logout.svg" />
+                                            {{ __('Log Out') }}</div>
                                     </x-dropdown-link>
                                 </form>
                             </x-slot>
