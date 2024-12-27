@@ -9,7 +9,7 @@ body {
 .header-background-shape-rect {
     position: absolute;
     background-color: #394911;
-    height: 120px;
+    height: 200px;
     width: 100%;
     left: 0;
     top: 0;
@@ -18,11 +18,31 @@ body {
 .header-background-shape-rounded {
     position: absolute;
     background-color: #394911;
-    height: 300px;
+    height: 400px;
     width: 100%;
     left: 0;
     top: 0;
-    border-radius: 40%;
+    border-radius: 5%;
+}
+
+@media screen and (min-width: 1024px) and (max-width: 1094px) {
+
+    .header-background-shape-rect {
+        height: 200px;
+    }
+    .header-background-shape-rounded {
+        height: 400px;
+    }
+}
+
+@media screen and (min-width: 1095px) {
+    .header-background-shape-rect {
+        height: 200px;
+    }
+    .header-background-shape-rounded {
+        height: 300px;
+        border-radius: 20%; 
+    }
 }
 
 .main-user-pic {
@@ -40,6 +60,16 @@ body {
     background-position: center;
     width: 70px;
     height: 70px;
+    border-radius: 50%;
+    background-color: white;
+    margin-right: -10px;
+}
+
+.main-user-pic-65 {
+    background-size: 100% 100%;
+    background-position: center;
+    width: 65px;
+    height: 65px;
     border-radius: 50%;
     background-color: white;
     margin-right: -10px;

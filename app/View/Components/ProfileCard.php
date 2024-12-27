@@ -8,14 +8,12 @@ use Illuminate\View\Component;
 
 class ProfileCard extends Component
 {
-    public $image;
     public $name;
     public $year;
     public $status;
 
-    public function __construct($image = '', $name = '', $year = '', $status = '')
+    public function __construct($name = '', $year = '', $status = '')
     {
-        $this->image = $image;
         $this->name = $name;
         $this->year = $year;
         $this->status = $status;

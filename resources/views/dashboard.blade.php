@@ -134,16 +134,14 @@
     <div class='header-background-shape-rect'></div>
     <div class='header-background-shape-rounded'></div>
 
-    <div class="font-400 text-[26px] text-white relative ml-[60px] my-6">
+    <div class="font-400 text-[26px] text-white relative sm:ml-[60px] my-6 text-center sm:text-left">
         Welcome back {{ $user->membership->first_name }}!
     </div>
 
     <div class="flex justify-center p-5 relative">
         <div class="flex flex-col gap-8">
             <div class="grid grid-cols-1 md:grid-cols-3 gap-4">
-                <x-profile-card :image="$user->membership->profile_photo != null
-                    ? 'storage/' . $user->membership->profile_photo
-                    : 'images/profile.png'" :name="$user->name" :year="substr($user->membership->created_at, 0, 4)" :status="$user->membership->membership_status" />
+                <x-profile-card :name="$user->name" :year="substr($user->membership->created_at, 0, 4)" :status="$user->membership->membership_status" />
                 @foreach ($status_cards as $card)
                     <x-status-card :title="$card['title']" :description="$card['description']" :status="$card['status']" :date="$card['date']"
                         :icon="$card['icon']" />

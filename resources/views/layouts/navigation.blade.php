@@ -89,20 +89,32 @@
     </div>
 
     <!-- New navigation bar code -->
-    <div class="relative z-10 mx-[30px] lg:mx-[60px] pt-2">
+    <div class="relative z-10 mx-[30px] lg:mx-[60px] pt-10 sm:pt-2">
         <div class="flex items-center flex-wrap gap-4 lg:gap-4">
-            <div><img src='/images/club_logo_2.png' height='76px' width='53px' /></div>
-            {{-- <div class="main-user-pic-70 block sm:hidden"
+            <div class="hidden sm:block"><img src='/images/club_logo_2.png' height='76px' width='53px' /></div>
+            <div class="main-user-pic-65 block sm:hidden"
                 style="background-image: url({{ Auth::user()->membership->profile_photo != null ? 'storage/' . Auth::user()->membership->profile_photo : 'images/profile.png' }});">
-            </div> --}}
+            </div>
             <div class="flex-grow hidden md:flex justify-start ml-10">
                 <div class="flex gap-4 md:gap-[50px]  text-white">
-                    <div class='active-nav-item nav-item'>Dashboard</div>
-                    <div class='nav-item'>Invoices</div>
-                    <div class='nav-item'>Club fees</div>
-                    <div class='nav-item'>Club members</div>
-                    <div class='nav-item'>Notice board</div>
-                    <div class='nav-item'>Document Centre</div>
+                    <x-nav-link :href="route('dashboard')" :active="request()->routeIs('dashboard')">
+                        {{ __('Dashboard') }}
+                    </x-nav-link>
+                    <x-nav-link :href="route('invoices')" :active="request()->routeIs('invoices')">
+                        {{ __('Invoices') }}
+                    </x-nav-link>
+                    <x-nav-link :href="route('fees')" :active="request()->routeIs('fees')">
+                        {{ __('Club Fees') }}
+                    </x-nav-link>
+                    <x-nav-link :href="route('members')" :active="request()->routeIs('members')">
+                        {{ __('Club Members') }}
+                    </x-nav-link>
+                    <x-nav-link :href="route('notice-board')" :active="request()->routeIs('notice-board')">
+                        {{ __('Notice Board') }}
+                    </x-nav-link>
+                    <x-nav-link :href="route('docs')" :active="request()->routeIs('docs')">
+                        {{ __('Document Center') }}
+                    </x-nav-link>
                 </div>
             </div>
             <div class="flex gap-[20px] items-center flex-grow justify-end">
@@ -171,50 +183,81 @@
     </div>
 
     <!-- Responsive Navigation Menu -->
-    <div :class="{ 'absolute': open, 'hidden': !open }" class="hidden sm:hidden bg-white z-50 w-full top-0">
-        <div class="pt-2 pb-3 space-y-1">
-            <x-responsive-nav-link :href="route('dashboard')" :active="request()->routeIs('dashboard')">
-                {{ __('Dashboard') }}
-            </x-responsive-nav-link>
-            <x-responsive-nav-link :href="route('invoices')" :active="request()->routeIs('invoices')">
-                {{ __('Invoices') }}
-            </x-responsive-nav-link>
-            <x-responsive-nav-link :href="route('fees')" :active="request()->routeIs('fees')">
-                {{ __('Club Fees') }}
-            </x-responsive-nav-link>
-            <x-responsive-nav-link :href="route('members')" :active="request()->routeIs('members')">
-                {{ __('Club Members') }}
-            </x-responsive-nav-link>
-            <x-responsive-nav-link :href="route('notice-board')" :active="request()->routeIs('notice-board')">
-                {{ __('Notice Board') }}
-            </x-responsive-nav-link>
-            <x-responsive-nav-link :href="route('docs')" :active="request()->routeIs('docs')">
-                {{ __('Document Center') }}
-            </x-responsive-nav-link>
-        </div>
-
-        <!-- Responsive Settings Options -->
-        <div class="pt-4 pb-1 border-t border-gray-200 dark:border-gray-600">
-            <div class="px-4">
-                <div class="font-medium text-base text-gray-800 dark:text-gray-200">{{ Auth::user()->name }}</div>
-                <div class="font-medium text-sm text-gray-500">{{ Auth::user()->email }}</div>
+    <div :class="{ 'fixed': open, 'hidden': !open }"
+        class="hidden sm:hidden bg-white z-50 w-[80%] top-0 right-0 min-h-full pt-2">
+        <div class="flex flex-col min-h-full">
+            <div class="flex mx-6">
+                <div class="flex-grow"><img src='/images/club_logo_2.png' height='76px' width='53px' /></div>
+                <!-- Hamburger -->
+                <div class="-mr-2 flex items-center sm:hidden">
+                    <button @click="open = ! open"
+                        class="inline-flex items-center justify-center p-2 rounded-md text-black dark:text-gray-500 hover:text-gray-500 dark:hover:text-gray-400 hover:bg-gray-100 dark:hover:bg-gray-900 focus:outline-none focus:bg-gray-100 dark:focus:bg-gray-900 focus:text-gray-500 dark:focus:text-gray-400 transition duration-150 ease-in-out">
+                        <svg class="h-6 w-6" stroke="currentColor" fill="none" viewBox="0 0 24 24">
+                            <path :class="{ 'hidden': open, 'inline-flex': !open }" class="inline-flex"
+                                stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                                d="M4 6h16M4 12h16M4 18h16" />
+                            <path :class="{ 'hidden': !open, 'inline-flex': open }" class="hidden"
+                                stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                                d="M6 18L18 6M6 6l12 12" />
+                        </svg>
+                    </button>
+                </div>
+            </div>
+            <div class="pt-10 pb-3 space-y-1 flex-grow">
+                <x-responsive-nav-link :href="route('dashboard')" :active="request()->routeIs('dashboard')">
+                    {{ __('Dashboard') }}
+                </x-responsive-nav-link>
+                <hr />
+                <x-responsive-nav-link :href="route('invoices')" :active="request()->routeIs('invoices')">
+                    {{ __('Invoices') }}
+                </x-responsive-nav-link>
+                <hr />
+                <x-responsive-nav-link :href="route('fees')" :active="request()->routeIs('fees')">
+                    {{ __('Club Fees') }}
+                </x-responsive-nav-link>
+                <hr />
+                <x-responsive-nav-link :href="route('members')" :active="request()->routeIs('members')">
+                    {{ __('Club Members') }}
+                </x-responsive-nav-link>
+                <hr />
+                <x-responsive-nav-link :href="route('notice-board')" :active="request()->routeIs('notice-board')">
+                    {{ __('Notice Board') }}
+                </x-responsive-nav-link>
+                <hr />
+                <x-responsive-nav-link :href="route('docs')" :active="request()->routeIs('docs')">
+                    {{ __('Document Center') }}
+                </x-responsive-nav-link>
             </div>
 
-            <div class="mt-3 space-y-1">
-                <x-responsive-nav-link :href="route('profile.edit')">
-                    {{ __('Profile') }}
-                </x-responsive-nav-link>
+            <!-- Responsive Settings Options -->
+            <div class="pt-4 pb-1 dark:border-gray-600">
+                {{-- <div class="px-4">
+                    <div class="font-medium text-base text-gray-800 dark:text-gray-200">{{ Auth::user()->name }}</div>
+                    <div class="font-medium text-sm text-gray-500">{{ Auth::user()->email }}</div>
+                </div> --}}
 
-                <!-- Authentication -->
-                <form method="POST" action="{{ route('logout') }}">
-                    @csrf
+                <div class="mt-3 space-y-1">
+                    <div class="flex items-center ml-6">
+                        <img class="mr-[-16px]" src="images/icons/gear.svg" />
+                        <x-responsive-nav-link :href="route('profile.edit')">
+                            {{ __('Profile') }}
+                        </x-responsive-nav-link>
+                    </div>
 
-                    <x-responsive-nav-link :href="route('logout')"
-                        onclick="event.preventDefault();
+                    <!-- Authentication -->
+                    <form method="POST" action="{{ route('logout') }}">
+                        @csrf
+
+                        <div class="flex items-center ml-6">
+                            <img class="mr-[-16px]" src="images/icons/logout.svg" /> <x-responsive-nav-link
+                                :href="route('logout')"
+                                onclick="event.preventDefault();
                                         this.closest('form').submit();">
-                        {{ __('Log Out') }}
-                    </x-responsive-nav-link>
-                </form>
+                                {{ __('Log Out') }}
+                            </x-responsive-nav-link>
+                        </div>
+                    </form>
+                </div>
             </div>
         </div>
     </div>
