@@ -9,9 +9,9 @@ use Illuminate\View\Component;
 class NoticeBoardItem extends Component
 {
 
-    public $datelabel, $day, $title, $description, $players, $breakoutSessions, $time;
+    public $datelabel, $day, $title, $description, $players, $breakoutSessions, $time, $noticeID;
 
-    public function __construct($datelabel, $day, $title, $description, $players, $breakoutSessions, $time)
+    public function __construct($datelabel, $day, $title, $description, $players, $breakoutSessions, $time, $noticeID)
     {
         $this->datelabel = $datelabel;
         $this->day = $day;
@@ -20,6 +20,7 @@ class NoticeBoardItem extends Component
         $this->players = $players;
         $this->breakoutSessions = $breakoutSessions;
         $this->time = $time;
+        $this->noticeID = $noticeID;
     }
 
     /**

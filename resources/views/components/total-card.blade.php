@@ -1,5 +1,5 @@
 <div class="common-card flex flex-col gap-[30px]">
-    <div class="flex">
+    <div class="flex flex-grow">
         <div class="flex-grow font-[500] text-[16px]">
             <?php echo htmlspecialchars($name); ?>
         </div>

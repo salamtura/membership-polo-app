@@ -6,6 +6,7 @@
             <div style="color: #71717A; font-size: 13px; font-weight: 400; text-wrap: nowrap">{{ $email }}</div>
         </div>
     </div>
-    <div style="color: #908E8F; font-size: 13px; font-weight: 500">{{ $points }}</div>
-    <div style="color: #374140; font-size: 14px; font-weight: 500">View</div>
+    <div style="color: {{-- #908E8F --}}#374140; font-size: {{-- 13px --}}16px; font-weight: 500">Points:
+        {{ $points }}</div>
+    {{-- <div style="color: #374140; font-size: 14px; font-weight: 500">View</div> --}}
 </div>

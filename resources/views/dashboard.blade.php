@@ -36,40 +36,23 @@
     <script src="https://cdn.jsdelivr.net/gh/alpinejs/alpine@v2.x.x/dist/alpine.min.js" defer></script>
 
     @php
-        $status_cards = [
-            [
-                'title' => 'Polo Pitch',
-                'description' => 'For Sticks and Ball Only',
-                'status' => 'open',
-                'date' => 'Opens Monday - Sunday +GMT',
-                'icon' => '/images/icons/pitch.svg',
-            ],
-            [
-                'title' => 'Chukker Booking',
-                'description' => 'Chukker 0003',
-                'status' => 'closed',
-                'date' => 'Friday November 11, 2024',
-                'icon' => '/images/icons/users.svg',
-            ],
-        ];
-
         $total_cards = [
             [
                 'name' => 'Invoice',
                 'icon' => '/images/icons/invoice.svg',
-                'value' => 0,
+                'value' => $invoices->count(),
                 'status' => 'unpaid',
             ],
             [
                 'name' => 'Subscription',
                 'icon' => '/images/icons/subscription.svg',
-                'value' => 0,
+                'value' => $user->membership->subscriptions->count(),
                 'status' => 'unpaid',
             ],
             [
                 'name' => 'Penalties',
                 'icon' => '/images/icons/penalties.svg',
-                'value' => 0,
+                'value' => $penalties->count(),
                 'status' => 'pending',
             ],
             [
@@ -102,33 +85,6 @@
                 'time' => '10:00 AM',
             ],
         ];
-
-        $member_list = [
-            [
-                'image' => 'images/profile.png',
-                'name' => 'Abubakar Abdullahi',
-                'email' => 'aa@gmail.com',
-                'points' => '-1',
-            ],
-            [
-                'image' => 'images/profile.png',
-                'name' => 'Abubakar Abdullahi',
-                'email' => 'aa@gmail.com',
-                'points' => '-1',
-            ],
-            [
-                'image' => 'images/profile.png',
-                'name' => 'Abubakar Abdullahi',
-                'email' => 'aa@gmail.com',
-                'points' => '-1',
-            ],
-            [
-                'image' => 'images/profile.png',
-                'name' => 'Abubakar Abdullahi',
-                'email' => 'aa@gmail.com',
-                'points' => '-1',
-            ],
-        ];
     @endphp
 
     <div class='header-background-shape-rect'></div>
@@ -138,15 +94,60 @@
         Welcome back {{ $user->membership->first_name }}!
     </div>
 
-    <div class="flex justify-center p-5 relative">
+    <div class="flex justify-center p-5 relative sm:mx-10">
         <div class="flex flex-col gap-8">
-            <div class="grid grid-cols-1 md:grid-cols-3 gap-4">
-                <x-profile-card :name="$user->name" :year="substr($user->membership->created_at, 0, 4)" :status="$user->membership->membership_status" />
-                @foreach ($status_cards as $card)
-                    <x-status-card :title="$card['title']" :description="$card['description']" :status="$card['status']" :date="$card['date']"
-                        :icon="$card['icon']" />
-                @endforeach
-            </div>
+            @if ($invoices->count() > 0 || $penalties->count() > 0 || $user->membership->subscription_status != 'active')
+                <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+                    <x-profile-card :name="$user->name" :year="substr($user->membership->created_at, 0, 4)" :status="$user->membership->membership_status" />
+                    <div class="bg-red-100 border-t-4 border-red-500 rounded-b text-teal-900 px-4 py-3 shadow-md "
+                        role="alert">
+                        <div class="flex">
+                            <div class="py-1"><svg class="fill-current h-6 w-6 text-red-500 mr-4"
+                                    xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20">
+                                    <path
+                                        d="M2.93 17.07A10 10 0 1 1 17.07 2.93 10 10 0 0 1 2.93 17.07zm12.73-1.41A8 8 0 1 0 4.34 4.34a8 8 0 0 0 11.32 11.32zM9 11V9h2v6H9v-4zm0-6h2v2H9V5z" />
+                                </svg></div>
+                            <div>
+                                <p class="font-bold">Profile Restricted</p>
+                                <p class="text-sm mt-2">
+                                    Dear Member,<br><br>
+                                    Your profile has been restricted due to unpaid invoices or penalties
+                                    associated
+                                    with your profile.
+                                    Therefor you are unable to view pitch status or book for chukkers.
+                                    Kindly make payment for any outstanding invoices to unrestrict your
+                                    profile.<br><br>
+                                    Thank you for understanding.<br>
+                                    Management.
+                                </p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            @else
+                <div class="grid grid-cols-1 md:grid-cols-3 gap-4">
+                    <x-profile-card :name="$user->name" :year="substr($user->membership->created_at, 0, 4)" :status="$user->membership->membership_status" />
+                    @if (\Carbon\Carbon::now()->greaterThan($pitch->to_date))
+                        @php $pitch->status = 'closed'; @endphp
+                    @endif
+                    <x-status-card title="Polo Pitch" description="{{ $pitch->description }}"
+                        status="{{ $pitch->status }}"
+                        date="{{ 'Open from ' . date('l, M d - H:ia', strtotime($pitch->from_date)) . ' to ' . date('l, M d H:ia', strtotime($pitch->to_date)) }}"
+                        icon="images/icons/pitch.svg"
+                        countdown="{{ Carbon\Carbon::parse($chukker->closing_time)->format('Y/m/d H:i:s') }}"
+                        :chukker="null" :booking="$booking" />
+                    @if (\Carbon\Carbon::now()->greaterThan($chukker->closing_time) || $pitch->status == 'closed')
+                        @php $chukker->status = 'closed'; @endphp
+                    @endif
+                    <x-status-card title="Chukker Booking" description="{{ $chukker['chukker_no'] }}"
+                        status="{{ $chukker->status }}"
+                        date="{{ 'Opened on ' . Carbon\Carbon::parse($chukker->chukker_date)->format('l d F Y') }}"
+                        icon="images/icons/users.svg"
+                        countdown="{{ Carbon\Carbon::parse($chukker->closing_time)->format('Y/m/d H:i:s') }}"
+                        :chukker="$chukker" :booking="$booking" />
+                </div>
+            @endif
+
             <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4">
                 @foreach ($total_cards as $card)
                     <x-total-card :name="$card['name']" :icon="$card['icon']" :value="$card['value']" :status="$card['status']" />
@@ -157,14 +158,14 @@
                     <div class="flex items-center mb-5">
                         <div class="flex-grow text-[24px] font-[400]">Notice Board</div>
                         <div class="flex items-center">
-                            <div class="see-all-card-text">See All Activities</div>
+                            <div class="see-all-card-text"><a href="/notice-board">See All Posts</a></div>
                             <img src="/images/icons/caret-right.svg" />
                         </div>
                     </div>
                     <div class="flex flex-col gap-4">
-                        @foreach ($notice_board_items as $item)
-                            <x-notice-board-item :datelabel="$item['datelabel']" :day="$item['day']" :title="$item['title']"
-                                :description="$item['description']" :players="$item['players']" :breakoutSessions="$item['breakoutSessions']" :time="$item['time']" />
+                        @foreach ($notices as $notice)
+                            <x-notice-board-item :noticeID="$notice->id" datelabel="" day="" :title="$notice->title"
+                                :description="substr($notice->post, 5, -6)" players="" breakoutSessions="" :time="Carbon\Carbon::parse($notice->created_at)->format('l d F Y')" />
                             @if (!$loop->last)
                                 <hr />
                             @endif
@@ -179,16 +180,20 @@
                             the guard polo club</div>
                     </div>
                     <div class="flex flex-col gap-10 mt-5 overflow-x-scroll sm:overflow-x-auto">
-                        @foreach ($member_list as $member)
-                            <x-member-list-item :image="$member['image']" :name="$member['name']" :email="$member['email']"
-                                :points="$member['points']" />
+                        @foreach ($members as $member)
+                            <x-member-list-item :image="$member->profile_photo != null
+                                ? 'storage/' . $member->profile_photo
+                                : 'images/profile.png'" :name="$member->user->name" :email="$member->user->email"
+                                :points="$member->player_handicap" />
                         @endforeach
                     </div>
                     <div class="flex justify-end mt-6">
-                        <div class="flex items-center">
-                            <div class="see-all-card-text">See All Members</div>
-                            <img src="/images/icons/caret-right.svg" />
-                        </div>
+                        <a href="{{ route('members') }}">
+                            <div class="flex items-center">
+                                <div class="see-all-card-text">See All Members</div>
+                                <img src="/images/icons/caret-right.svg" />
+                            </div>
+                        </a>
                     </div>
                 </div>
 
