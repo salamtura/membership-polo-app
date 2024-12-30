@@ -38,13 +38,13 @@
     @php
         $total_cards = [
             [
-                'name' => 'Invoice',
+                'name' => 'Invoices',
                 'icon' => '/images/icons/invoice.svg',
                 'value' => $invoices->count(),
                 'status' => 'unpaid',
             ],
             [
-                'name' => 'Subscription',
+                'name' => 'Subscriptions',
                 'icon' => '/images/icons/subscription.svg',
                 'value' => $user->membership->subscriptions->count(),
                 'status' => 'unpaid',
@@ -125,7 +125,7 @@
                 </div>
             @endif
 
-            <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4">
+            <div class="grid grid-cols-2 sm:grid-cols-2 lg:grid-cols-4 gap-4">
                 @foreach ($total_cards as $card)
                     <x-total-card :name="$card['name']" :icon="$card['icon']" :value="$card['value']" :status="$card['status']" />
                 @endforeach
@@ -157,7 +157,7 @@
                             the guard polo club</div>
                     </div>
                     <div class="flex flex-col gap-10 mt-5 overflow-x-scroll sm:overflow-x-auto">
-                        @foreach ($members as $member)
+                        @foreach ($members->take(4) as $member)
                             <x-member-list-item :image="$member->profile_photo != null
                                 ? 'storage/' . $member->profile_photo
                                 : 'images/profile.png'" :name="$member->user->name" :email="$member->user->email"

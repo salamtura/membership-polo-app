@@ -9,7 +9,7 @@
         style="border-left: 6px solid #A3D131">
         <div class="text-[#293130] text-[16px] font-[700]"><a
                 href="/post-details/{{ $noticeID }}">{{ $title }}</a></div>
-        <div class="text-[#374140] font-[400] text-[14px]">{{ $description }}</div>
+        <div class="text-[#374140] font-[400] text-[14px]"><?php echo htmlspecialchars($description); ?></div>
         <div class="flex flex-col gap-2">
             <div class="{{-- flex --}} hidden items-center flex-wrap gap-[10px]">
                 <div class="font-[400] text-[14px] text-[#667185]">{{ $players }} Players</div>
