@@ -85,26 +85,6 @@
                 'time' => '10:00 AM',
             ],
         ];
-        $mems = [
-            [
-                'image' => 'images/profile.png',
-                'name' => 'Abubakar Abdullahi Muhammed',
-                'email' => 'abdullahiboy@yahoo.com',
-                'points' => -2,
-            ],
-            [
-                'image' => 'images/profile.png',
-                'name' => 'Bashir Abdulrahman Haske',
-                'email' => 'salamtura@yahoo.com',
-                'points' => -2,
-            ],
-            [
-                'image' => 'images/profile.png',
-                'name' => 'Abba Sani Kangiwa',
-                'email' => 'shehukangiwa@yahoo.com',
-                'points' => 2,
-            ],
-        ];
     @endphp
 
     <div class='header-background-shape-rect'></div>
@@ -177,15 +157,11 @@
                             the guard polo club</div>
                     </div>
                     <div class="flex flex-col gap-10 mt-5 overflow-x-scroll sm:overflow-x-auto">
-                        {{-- @foreach ($members as $member)
+                        @foreach ($members->take(4) as $member)
                             <x-member-list-item :image="$member->profile_photo != null
                                 ? 'storage/' . $member->profile_photo
                                 : 'images/profile.png'" :name="$member->user->name" :email="$member->user->email"
                                 :points="$member->player_handicap" />
-                        @endforeach --}}
-                        @foreach ($mems as $mem)
-                            <x-member-list-item image="{{ $mem['image'] }}" name="{{ $mem['name'] }}"
-                                email="{{ $mem['email'] }}" points="{{ $mem['points'] }}" />
                         @endforeach
                     </div>
                     <div class="flex justify-end mt-6">
