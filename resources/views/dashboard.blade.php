@@ -38,13 +38,13 @@
     @php
         $total_cards = [
             [
-                'name' => 'Invoice',
+                'name' => 'Invoices',
                 'icon' => '/images/icons/invoice.svg',
                 'value' => $invoices->count(),
                 'status' => 'unpaid',
             ],
             [
-                'name' => 'Subscription',
+                'name' => 'Subscriptions',
                 'icon' => '/images/icons/subscription.svg',
                 'value' => $user->membership->subscriptions->count(),
                 'status' => 'unpaid',
@@ -83,6 +83,26 @@
                 'players' => 7,
                 'breakoutSessions' => 4,
                 'time' => '10:00 AM',
+            ],
+        ];
+        $mems = [
+            [
+                'image' => 'images/profile.png',
+                'name' => 'Abubakar Abdullahi Muhammed',
+                'email' => 'abdullahiboy@yahoo.com',
+                'points' => -2,
+            ],
+            [
+                'image' => 'images/profile.png',
+                'name' => 'Bashir Abdulrahman Haske',
+                'email' => 'salamtura@yahoo.com',
+                'points' => -2,
+            ],
+            [
+                'image' => 'images/profile.png',
+                'name' => 'Abba Sani Kangiwa',
+                'email' => 'shehukangiwa@yahoo.com',
+                'points' => 2,
             ],
         ];
     @endphp
@@ -125,7 +145,7 @@
                 </div>
             @endif
 
-            <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4">
+            <div class="grid grid-cols-2 sm:grid-cols-2 lg:grid-cols-4 gap-4">
                 @foreach ($total_cards as $card)
                     <x-total-card :name="$card['name']" :icon="$card['icon']" :value="$card['value']" :status="$card['status']" />
                 @endforeach
@@ -157,11 +177,15 @@
                             the guard polo club</div>
                     </div>
                     <div class="flex flex-col gap-10 mt-5 overflow-x-scroll sm:overflow-x-auto">
-                        @foreach ($members as $member)
+                        {{-- @foreach ($members as $member)
                             <x-member-list-item :image="$member->profile_photo != null
                                 ? 'storage/' . $member->profile_photo
                                 : 'images/profile.png'" :name="$member->user->name" :email="$member->user->email"
                                 :points="$member->player_handicap" />
+                        @endforeach --}}
+                        @foreach ($mems as $mem)
+                            <x-member-list-item image="{{ $mem['image'] }}" name="{{ $mem['name'] }}"
+                                email="{{ $mem['email'] }}" points="{{ $mem['points'] }}" />
                         @endforeach
                     </div>
                     <div class="flex justify-end mt-6">
