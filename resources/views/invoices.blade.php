@@ -5,7 +5,11 @@
             </h2>
         </x-slot> --}}
 
-    <div class="py-12">
+    <x-page-body-container>
+        <x-page-heading title="Invoices" subtitle="View all your invoices and make sure to pay them on time" />
+    </x-page-body-container>
+
+    <div class="py-12 hidden">
         <div class="max-w-7xl mx-auto sm:px-6 lg:px-8">
             <div class="bg-white overflow-hidden shadow-sm sm:rounded-lg">
                 <div class="p-6 text-gray-900 ">
