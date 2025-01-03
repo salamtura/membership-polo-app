@@ -96,7 +96,7 @@
                 style="background-image: url({{ Auth::user()->membership->profile_photo != null ? 'storage/' . Auth::user()->membership->profile_photo : 'images/profile.png' }});">
             </div>
             <div class="flex-grow hidden md:flex justify-start ml-10">
-                <div class="flex gap-4 md:gap-[50px]  text-white">
+                <div class="flex gap-4 {{ Route::currentRouteName() === 'dashboard' ? 'text-white' : 'text-black' }}">
                     <x-nav-link :href="route('dashboard')" :active="request()->routeIs('dashboard')">
                         {{ __('Dashboard') }}
                     </x-nav-link>
@@ -122,18 +122,18 @@
                         xmlns="http://www.w3.org/2000/svg">
                         <path
                             d="M21.5303 14.4697L19.5 12.4395V9.75C19.4977 7.89138 18.8063 6.09964 17.5595 4.72124C16.3127 3.34284 14.5991 2.4757 12.75 2.2875V0.75H11.25V2.2875C9.40093 2.4757 7.68732 3.34284 6.44053 4.72124C5.19373 6.09964 4.50233 7.89138 4.5 9.75V12.4395L2.46975 14.4697C2.32909 14.6104 2.25004 14.8011 2.25 15V17.25C2.25 17.4489 2.32902 17.6397 2.46967 17.7803C2.61032 17.921 2.80109 18 3 18H8.25V18.5828C8.23335 19.5343 8.5686 20.4585 9.19145 21.1781C9.81429 21.8977 10.6809 22.362 11.625 22.482C12.1464 22.5337 12.6728 22.4757 13.1704 22.3117C13.6681 22.1478 14.1259 21.8815 14.5144 21.53C14.9029 21.1785 15.2136 20.7495 15.4264 20.2707C15.6392 19.792 15.7494 19.2739 15.75 18.75V18H21C21.1989 18 21.3897 17.921 21.5303 17.7803C21.671 17.6397 21.75 17.4489 21.75 17.25V15C21.75 14.8011 21.6709 14.6104 21.5303 14.4697ZM14.25 18.75C14.25 19.3467 14.0129 19.919 13.591 20.341C13.169 20.7629 12.5967 21 12 21C11.4033 21 10.831 20.7629 10.409 20.341C9.98705 19.919 9.75 19.3467 9.75 18.75V18H14.25V18.75ZM20.25 16.5H3.75V15.3105L5.78025 13.2803C5.92091 13.1396 5.99996 12.9489 6 12.75V9.75C6 8.1587 6.63214 6.63258 7.75736 5.50736C8.88258 4.38214 10.4087 3.75 12 3.75C13.5913 3.75 15.1174 4.38214 16.2426 5.50736C17.3679 6.63258 18 8.1587 18 9.75V12.75C18 12.9489 18.0791 13.1396 18.2197 13.2803L20.25 15.3105V16.5Z"
-                            fill="white" />
+                            fill="{{ Route::currentRouteName() === 'dashboard' ? 'white' : 'black' }}" />
                     </svg>
                 </div>
                 <div class="flex gap-[20px] items-center">
-                    <div class="main-user-pic hidden sm:block"
+                    <div class="main-user-pic hidden md:block"
                         style="background-image: url({{ Auth::user()->membership->profile_photo != null ? 'storage/' . Auth::user()->membership->profile_photo : 'images/profile.png' }});">
                     </div>
-                    <div class="hidden sm:flex sm:flex-col sm:justify-center gap-1 ">
+                    <div class="hidden md:flex md:flex-col md:justify-center gap-1 ">
                         <x-dropdown align="right" width="48">
                             <x-slot name="trigger">
                                 <button
-                                    class="inline-flex items-center border border-transparent text-sm leading-4 font-medium rounded-md dark:text-gray-400 bg-transparent dark:bg-gray-800 dark:hover:text-gray-300 focus:outline-none transition ease-in-out duration-150 fill-white hover:text-gray-400 hover:fill-gray-400 text-white">
+                                    class="inline-flex items-center border border-transparent text-sm leading-4 font-medium rounded-md dark:text-gray-400 bg-transparent dark:bg-gray-800 dark:hover:text-gray-300 focus:outline-none transition ease-in-out duration-150  hover:text-gray-400 hover:fill-gray-400 {{ Route::currentRouteName() === 'dashboard' ? 'text-white fill-white' : 'text-black fill-black' }}">
                                     <div>{{ Auth::user()->name }}</div>
 
                                     <div class="ml-1">
@@ -167,7 +167,7 @@
                         </x-dropdown>
                         <div class="pill-success-inverted self-start text-[12px]">Member</div>
                     </div>
-                    <div class="-mr-2 flex items-center sm:hidden">
+                    <div class="-mr-2 flex items-center md:hidden">
                         <button @click="open = ! open"
                             class="inline-flex items-center justify-center p-2 rounded-md text-gray-400 dark:text-gray-500 hover:text-gray-500 dark:hover:text-gray-400 hover:bg-gray-100 dark:hover:bg-gray-900 focus:outline-none focus:bg-gray-100 dark:focus:bg-gray-900 focus:text-gray-500 dark:focus:text-gray-400 transition duration-150 ease-in-out">
                             <svg class="h-6 w-6" stroke="currentColor" fill="none" viewBox="0 0 24 24">
