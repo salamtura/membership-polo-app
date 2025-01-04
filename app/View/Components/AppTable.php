@@ -11,9 +11,10 @@ class AppTable extends Component
     /**
      * Create a new component instance.
      */
-    public function __construct()
+    public $headerFields;
+    public function __construct($headerFields = [])
     {
-        //
+        $this->headerFields = $headerFields;
     }
 
     /**

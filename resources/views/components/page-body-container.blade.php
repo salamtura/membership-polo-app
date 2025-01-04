@@ -1,3 +1,3 @@
-<div class="mx-[60px] mt-[60px]">
+<div class="mx-[30px] sm:mx-[60px] mt-[60px]">
     {{ $slot }}
 </div>

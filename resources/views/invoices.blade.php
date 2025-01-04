@@ -7,6 +7,7 @@
 
     <x-page-body-container>
         <x-page-heading title="Invoices" subtitle="View all your invoices and make sure to pay them on time" />
+        <x-app-table :headerFields="['Invoice No', 'Description', 'Type', 'Amount', 'Invoice Date', 'Due Date', 'Status', 'Action']" />
     </x-page-body-container>
 
     <div class="py-12 hidden">
@@ -76,6 +77,5 @@
             </div>
         </div>
     </div>
-    <!-- component -->
 
 </x-app-layout>
