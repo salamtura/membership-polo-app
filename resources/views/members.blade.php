@@ -26,7 +26,7 @@
                     <option value="unpaid">2</option>
                 </select>
             </div>
-            <div class="grid grid-cols-4 mt-12">
+            <div class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 mt-12">
                 @foreach ($members as $member)
                     <x-member-card :name="$member->user->name" :photo="$member->profile_photo != null
                         ? 'storage/' . $member->profile_photo

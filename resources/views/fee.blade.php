@@ -1,7 +1,7 @@
 <x-app-layout>
     <x-page-body-container>
         <x-page-heading title="Club Fees" subtitle="Here are all our billing plans for the guards polo club" />
-        <div class="grid grid-cols-4">
+        <div class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4">
             @foreach ($membershipfees as $fee)
                 <x-club-fee-card :name="$fee->name" price="{{ '₦' . number_format($fee->amount, 2) }}" />
             @endforeach
