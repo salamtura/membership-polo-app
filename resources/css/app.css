@@ -46,7 +46,7 @@ body {
 }
 
 .main-user-pic {
-    background-size: 100% 100%;
+    background-size: cover;
     background-position: center;
     width: 40px;
     height: 40px;
@@ -56,7 +56,7 @@ body {
 }
 
 .main-user-pic-70 {
-    background-size: 100% 100%;
+    background-size: cover;
     background-position: center;
     width: 70px;
     height: 70px;
@@ -66,7 +66,7 @@ body {
 }
 
 .main-user-pic-65 {
-    background-size: 100% 100%;
+    background-size: cover;
     background-position: center;
     width: 65px;
     height: 65px;
@@ -124,7 +124,7 @@ body {
 
 .polo-member-pic {
     background-image: url('assets/polo-member.jpeg');
-    background-size: 100% 100%;
+    background-size: cover;
     background-position: center;
     width: 50px;
     height: 50px;
